@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;500;700&amp;family=Barlow+Condensed:wght@400;500;700&amp;family=Atkinson+Hyperlegible+Next:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        body {
+            background-color: #141218;
+            color: #e6e0e9;
+        }
+    </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-container-high": "#2b292f", "on-primary-fixed": "#22005d", surface: "#141318", "on-tertiary-fixed-variant": "#594400", "on-error-container": "#ffdad6", "primary-fixed": "#e9ddff", "inverse-on-surface": "#312f35", outline: "#948e9c", "inverse-primary": "#6750a4", "surface-variant": "#36343a", "on-background": "#e6e1e9", error: "#ffb4ab", "secondary-fixed": "#e8ddff", "surface-container": "#201f24", "surface-dim": "#141318", tertiary: "#e7c365", "surface-container-highest": "#36343a", "on-primary-container": "#e0d2ff", "outline-variant": "#494551", "on-secondary": "#342b4b", "primary-fixed-dim": "#cfbdff", "on-tertiary-fixed": "#241a00", "on-surface-variant": "#cbc4d2", "on-primary": "#371e72", "surface-bright": "#3a383e", "tertiary-fixed": "#ffdf93", "on-error": "#690005", "on-tertiary-container": "#503d00", "on-secondary-fixed": "#1e1635", "secondary-fixed-dim": "#cdc0e8", background: "#141318", "primary-container": "#6750a4", "error-container": "#93000a", "tertiary-container": "#c9a74d", "on-secondary-fixed-variant": "#4a4263", "secondary-container": "#4d4465", "surface-container-lowest": "#0f0d13", "surface-tint": "#cfbdff", "surface-container-low": "#1c1b20", "inverse-surface": "#e6e1e9", secondary: "#cdc0e8", primary: "#cfbdff", "on-tertiary": "#3e2e00", "on-primary-fixed-variant": "#4e378a", "on-secondary-container": "#beb3da", "on-surface": "#e6e1e9", "tertiary-fixed-dim": "#e7c365", "neon-yellow": "#facc15"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {gutter: "20px", xs: "4px", unit: "4px", md: "16px", "container-max": "1280px", sm: "8px", xl: "64px", lg: "32px"}, fontFamily: {"headline-md": ["Bebas Neue"], "headline-lg": ["Bebas Neue"], "headline-lg-mobile": ["Bebas Neue"], "body-md": ["Inter"], "body-lg": ["Barlow Condensed"], "label-bold": ["Atkinson Hyperlegible Next"], caption: ["Inter"], "display-xl": ["Bebas Neue"]}, fontSize: {"headline-md": ["32px", {lineHeight: "110%", letterSpacing: "0.04em", fontWeight: "400"}], "headline-lg": ["64px", {lineHeight: "100%", letterSpacing: "0.02em", fontWeight: "400"}], "headline-lg-mobile": ["48px", {lineHeight: "100%", letterSpacing: "0.02em", fontWeight: "400"}], "body-md": ["16px", {lineHeight: "150%", letterSpacing: "0", fontWeight: "400"}], "body-lg": ["18px", {lineHeight: "160%", letterSpacing: "0.02em", fontWeight: "400"}], "label-bold": ["14px", {lineHeight: "120%", letterSpacing: "0.05em", fontWeight: "700"}], caption: ["12px", {lineHeight: "120%", letterSpacing: "0", fontWeight: "500"}], "display-xl": ["96px", {lineHeight: "90%", letterSpacing: "0.02em", fontWeight: "400"}]}}}};</script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface w-full top-0 sticky border-b-2 border-outline-variant dark:border-outline-variant z-50">
+<div class="flex justify-between items-center px-gutter py-md w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+<h1 class="font-display-xl text-headline-md text-primary dark:text-primary italic">STRIKE &amp; BEAT</h1>
+</div>
+<nav class="hidden md:flex gap-lg items-center">
+<a class="text-on-surface dark:text-on-surface font-medium uppercase hover:bg-primary hover:text-surface transition-colors duration-100 px-2 py-1" href="#">Inicio</a>
+<a class="text-on-surface dark:text-on-surface font-medium uppercase hover:bg-primary hover:text-surface transition-colors duration-100 px-2 py-1" href="#">Combates</a>
+<a class="text-on-surface dark:text-on-surface font-medium uppercase hover:bg-primary hover:text-surface transition-colors duration-100 px-2 py-1" href="#">Artistas</a>
+<a class="text-primary dark:text-primary font-bold border-b-4 border-primary px-2 py-1" href="#">Entradas</a>
+</nav>
+<button class="font-headline-md text-headline-md uppercase tracking-widest text-primary hover:bg-primary hover:text-surface transition-colors duration-100 scale-100 active:scale-95 transition-transform">
+                CART
+            </button>
+</div>
+</header>
+<main class="w-full">
+<!-- Hero Section -->
+<section class="relative h-[530px] w-full flex items-end overflow-hidden border-b-4 border-neon-yellow">
+<img alt="Fighter Hero" class="absolute inset-0 w-full h-full object-cover grayscale opacity-60" data-alt="A gritty, black and white high-contrast close-up of a professional boxer in a dimly lit underground gym. Dramatic harsh side-lighting accentuates the sweat on his skin and the intense focus in his eyes. The aesthetic is brutalist and industrial with visible concrete textures in the background. Deep shadows and stark highlights dominate the frame, reinforcing the raw energy of the Strike and Beat brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ0ZBiiJDReXCpsQui9vsSIEgfvW1iErueKhgtar1UwQtmc_XaAwK7ntDAMEMN-Jqzz1XLLN6x6VZqIkYPhcUdIoOb3LpoUcWoUk4Y0mGvU0-gLhU6YS15hqLiNt8vPlIDBaW0CMpZ0R80GUUt2a0mM-MiVbi1lKn4tKHRUDYe_tekeELTwWOhWmZHYjVak5kt6ms-alfZ3tXdR2h5NO5F4-0EgZ_3_udAjsVZ0hlhm3GsXdjMFGmfSxxshoAdAX17CaQSl232GCc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+<div class="relative z-10 px-gutter pb-xl w-full max-w-container-max mx-auto">
+<div class="bg-neon-yellow text-surface inline-block px-md py-xs font-headline-md text-headline-md uppercase mb-sm">Tickets Live</div>
+<h2 class="font-display-xl text-display-xl uppercase text-white leading-none">Asegura tu <br/><span class="text-neon-yellow">Lugar en el Ring</span></h2>
+</div>
+</section>
+<!-- Checkout Content -->
+<section class="max-w-container-max mx-auto px-gutter py-xl grid grid-cols-1 md:grid-cols-12 gap-xl">
+<!-- Pricing Cards (Left Column) -->
+<div class="md:col-span-5 space-y-lg">
+<h3 class="font-headline-lg text-headline-md uppercase border-l-4 border-neon-yellow pl-md">Selecciona tu Entrada</h3>
+<!-- Ticket 1 -->
+<div class="bg-surface-container border-2 border-outline-variant p-lg group hover:border-neon-yellow transition-colors">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h4 class="font-headline-md text-headline-md uppercase text-white">Entrada Pista</h4>
+<p class="text-on-surface-variant font-body-md">Acceso directo a pie de ring. Vive la vibración de cada golpe.</p>
+</div>
+<span class="font-display-xl text-headline-lg text-neon-yellow leading-none">15€</span>
+</div>
+<button class="w-full bg-neon-yellow text-surface font-headline-md py-md uppercase tracking-widest hover:bg-white transition-colors active:scale-[0.98] transition-transform">Seleccionar</button>
+</div>
+<!-- Ticket 2 -->
+<div class="bg-surface-container border-2 border-neon-yellow p-lg relative">
+<div class="absolute -top-4 right-4 bg-error text-on-error px-sm py-1 font-label-bold uppercase text-xs">Solo 233 disponibles</div>
+<div class="flex justify-between items-start mb-md">
+<div>
+<h4 class="font-headline-md text-headline-md uppercase text-white">Entrada Grada</h4>
+<p class="text-on-surface-variant font-body-md">Visión panorámica del octágono y el escenario principal.</p>
+</div>
+<span class="font-display-xl text-headline-lg text-neon-yellow leading-none">20€</span>
+</div>
+<button class="w-full bg-white text-surface font-headline-md py-md uppercase tracking-widest hover:bg-neon-yellow transition-colors active:scale-[0.98] transition-transform">Seleccionar</button>
+</div>
+</div>
+<!-- Checkout Form (Right Column) -->
+<div class="md:col-span-7 bg-surface-container-high p-lg border-2 border-outline">
+<h3 class="font-headline-md text-headline-md uppercase mb-lg text-white">Finalizar Compra</h3>
+<form class="space-y-md">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-bold text-on-surface-variant uppercase">Nombre Completo</label>
+<input class="bg-surface border border-outline-variant focus:border-neon-yellow focus:ring-0 text-white p-md uppercase font-body-md" placeholder="JOHN DOE" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-bold text-on-surface-variant uppercase">Email</label>
+<input class="bg-surface border border-outline-variant focus:border-neon-yellow focus:ring-0 text-white p-md uppercase font-body-md" placeholder="JD@STRIKEBEAT.COM" type="email"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs pt-md">
+<label class="font-label-bold text-on-surface-variant uppercase">Información de Pago (Stripe)</label>
+<div class="bg-surface border border-outline-variant p-md relative group">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="credit_card">credit_card</span>
+<input class="bg-transparent border-none focus:ring-0 text-white w-full uppercase font-body-md" placeholder="4242 4242 4242 4242" type="text"/>
+</div>
+<div class="flex gap-md mt-md">
+<input class="bg-surface border border-outline-variant focus:border-neon-yellow focus:ring-0 text-white p-md w-1/2 uppercase font-body-md" placeholder="MM / YY" type="text"/>
+<input class="bg-surface border border-outline-variant focus:border-neon-yellow focus:ring-0 text-white p-md w-1/2 uppercase font-body-md" placeholder="CVC" type="text"/>
+</div>
+</div>
+</div>
+<div class="pt-lg">
+<div class="flex justify-between border-t border-outline-variant py-md">
+<span class="font-label-bold uppercase text-on-surface-variant">Subtotal</span>
+<span class="font-headline-md text-white uppercase">20.00€</span>
+</div>
+<div class="flex justify-between border-t border-outline-variant py-md">
+<span class="font-label-bold uppercase text-on-surface-variant">Gastos de Gestión</span>
+<span class="font-headline-md text-white uppercase">2.50€</span>
+</div>
+<div class="flex justify-between border-t-2 border-neon-yellow py-md">
+<span class="font-headline-md uppercase text-neon-yellow">Total</span>
+<span class="font-display-xl text-headline-lg text-neon-yellow leading-none">22.50€</span>
+</div>
+</div>
+<button class="w-full bg-neon-yellow text-surface font-display-xl text-headline-md py-lg uppercase tracking-tighter hover:bg-white transition-all active:scale-[0.97] flex items-center justify-center gap-md" type="submit">
+                        Pagar Ahora <span class="material-symbols-outlined" data-icon="bolt" data-weight="fill" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</button>
+<p class="text-center text-caption text-on-surface-variant uppercase tracking-widest pt-sm">Secure checkout powered by Stripe</p>
+</form>
+</div>
+</section>
+<!-- Artist Band -->
+<section class="bg-surface-container-highest border-t-4 border-neon-yellow mt-xl overflow-hidden">
+<div class="flex whitespace-nowrap py-lg">
+<div class="flex gap-xl px-gutter animate-marquee">
+<!-- Repeatable Artist Blocks -->
+<div class="flex items-center gap-md grayscale hover:grayscale-0 transition-all cursor-pointer">
+<img alt="Artist 1" class="w-24 h-24 object-cover border-2 border-neon-yellow" data-alt="A gritty close-up portrait of a hip-hop artist performing on a dark, smoky stage. High-contrast monochrome style with intense yellow accent lighting on the artist's face. The background features industrial textures and steel scaffolding. This image represents the raw, urban musical energy of the Strike and Beat festival events." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHtLNOaurcRpZO8Fjhrw4IJzz95nv1H2S2V3wzR07F8IKB1H_RGc27KoBmVfGx91uaETPpNrPzvH79jvrNpkpiUFFPWLjOgClN5AWBjtryAtgKPJ959O9GaUm8OdzgVlquK6Ina6dchlQVT060lzC1GP1rWYkalmHvclZfZ8_vT_uBjNI8UZ3k50qvb_aFV57Qb-ACbifql6UpkckZufRn4i7H6UpVWAdRGPVHNcZUTDlZzZhd2wqKrqW8o2NbEXgBrlnu6_1_TrY"/>
+<span class="font-headline-md text-headline-md uppercase text-white">DJ VOLTAGE</span>
+</div>
+<div class="flex items-center gap-md grayscale hover:grayscale-0 transition-all cursor-pointer">
+<img alt="Artist 2" class="w-24 h-24 object-cover border-2 border-white" data-alt="A dynamic shot of a rock performer screaming into a vintage microphone in a dark club environment. Deep blacks, sharp highlights, and a gritty film grain texture dominate. The lighting is harsh and industrial, echoing the raw aesthetic of the combat sports events. Neon yellow hints appear in the reflections of the scene." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCssS0J71BOMdR-cqzeQIP0EdaT0aZfccuqtB2KYSV26AgbjxeReIM1zxhVR0jRR6jOvsio8ZQeVwjtG1gtj7KNPXxFKYkz2dOLf-bqFkc3WNIE5mpvEFIy29SWfKdTJfKGnkXRimvIS-vv8LmdUQxI0Qu4LGA-l6T6cz5B6uKtsxmvrI63LcA5HhAOrox432rpK2xlO98peDub_D0DPYztUKF063F-9Tu28TY6GULn4_uyaZzzCVdMkEOP8dwTZn99jjDNTcjyG5M"/>
+<span class="font-headline-md text-headline-md uppercase text-white">THE STRIKE CLAN</span>
+</div>
+<div class="flex items-center gap-md grayscale hover:grayscale-0 transition-all cursor-pointer">
+<img alt="Artist 3" class="w-24 h-24 object-cover border-2 border-neon-yellow" data-alt="An electronic music producer working on a soundboard in a dark, concrete studio. The scene is illuminated by the cold glow of equipment lights and sharp, high-contrast monochrome shadows. The industrial-brutalist style is maintained with visible wires and raw textures, capturing the underground spirit of the brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6Fd-VXijM_Na529k0zZK-RSGmzhbdBQW8Z81W2rg8ri6GzGQrGV0WcrBVIiMMdSGxm_tTB3-Hy3wMJV0Krx1cJNVPIOHRYx2iG9uXWVAVbNnxRj0JaQhikFvJT_QeEGWrLRmhx_JSofajc4unJR_DwaJ3CwyoyG7YdhHKJdsBn1Dvc2rpRzmEhq4Q2eKDXfLUADboS1OTNseEhI3A4G4Ar8kkrcq08xyBaFoV3j89NEQeP2kLUowldB98cgL4gsBBlbPzHIfJ8UE"/>
+<span class="font-headline-md text-headline-md uppercase text-white">RAW FREQUENCY</span>
+</div>
+<div class="flex items-center gap-md grayscale hover:grayscale-0 transition-all cursor-pointer">
+<img alt="Artist 4" class="w-24 h-24 object-cover border-2 border-white" data-alt="A silhouette of a drummer performing with immense energy against a high-contrast white light background. The style is stark and uncompromising, featuring heavy textures and raw motion. This monochrome image reinforces the aggressive, high-energy atmosphere of the Strike and Beat fight nights and music festivals." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKCh-zNWaWqpGqQqnsDFb06SNmPOQ1KmbiPSCwo5vPWzPJQuoTjdogc1a4UkUBoX0SH5lnMdPitsECclOfJncgFxH6BgE6_ayoY918KUC154UoaJrLX59P6b6RhLgyazHRXgyjQv5YJgUHAn8ZPHPDfuOZyI3w_4SVu5ASjKFFxg-oEU10cVT4bHICC6_TbjYJjVadtA43NMWmzIyEt71AG6L5_TRLIbG_jglocWObWPjVWzqYg_cqsb06nA2LIPMuTj2vy_u-OGg"/>
+<span class="font-headline-md text-headline-md uppercase text-white">BEAT DOWN</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-xl border-t-2 border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter px-gutter max-w-container-max mx-auto">
+<div class="md:col-span-4">
+<h4 class="font-headline-lg text-headline-lg text-on-surface mb-md">STRIKE &amp; BEAT</h4>
+<p class="font-body-md text-body-md uppercase tracking-tighter text-on-surface-variant">© 2024 STRIKE &amp; BEAT. RAW INDUSTRIAL ENERGY.</p>
+</div>
+<div class="md:col-span-8 flex flex-wrap gap-lg justify-end items-end">
+<a class="font-body-md text-body-md uppercase tracking-tighter text-on-surface-variant hover:text-primary transition-opacity hover:opacity-80" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md uppercase tracking-tighter text-on-surface-variant hover:text-primary transition-opacity hover:opacity-80" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md uppercase tracking-tighter text-on-surface-variant hover:text-primary transition-opacity hover:opacity-80" href="#">Contact</a>
+<a class="font-body-md text-body-md uppercase tracking-tighter text-on-surface-variant hover:text-primary transition-opacity hover:opacity-80" href="#">Press Kit</a>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface-container-highest dark:bg-surface-container-highest border-t-4 border-primary">
+<div class="flex justify-around items-center w-full h-16">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-caption text-caption uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="sports_martial_arts">sports_martial_arts</span>
+<span class="font-caption text-caption uppercase">Fights</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="album">album</span>
+<span class="font-caption text-caption uppercase">Music</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-surface p-2 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="local_activity">local_activity</span>
+<span class="font-caption text-caption uppercase">Tickets</span>
+</a>
+</div>
+</nav>
+</body></html>

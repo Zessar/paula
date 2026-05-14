@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;500;700&amp;family=Barlow+Condensed:wght@400;500;700&amp;family=Atkinson+Hyperlegible+Next:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-container-high": "#2b292f", "on-primary-fixed": "#22005d", surface: "#141318", "on-tertiary-fixed-variant": "#594400", "on-error-container": "#ffdad6", "primary-fixed": "#e9ddff", "inverse-on-surface": "#312f35", outline: "#948e9c", "inverse-primary": "#6750a4", "surface-variant": "#36343a", "on-background": "#e6e1e9", error: "#ffb4ab", "secondary-fixed": "#e8ddff", "surface-container": "#201f24", "surface-dim": "#141318", tertiary: "#e7c365", "surface-container-highest": "#36343a", "on-primary-container": "#e0d2ff", "outline-variant": "#494551", "on-secondary": "#342b4b", "primary-fixed-dim": "#cfbdff", "on-tertiary-fixed": "#241a00", "on-surface-variant": "#cbc4d2", "on-primary": "#371e72", "surface-bright": "#3a383e", "tertiary-fixed": "#ffdf93", "on-error": "#690005", "on-tertiary-container": "#503d00", "on-secondary-fixed": "#1e1635", "secondary-fixed-dim": "#cdc0e8", background: "#141318", "primary-container": "#6750a4", "error-container": "#93000a", "tertiary-container": "#c9a74d", "on-secondary-fixed-variant": "#4a4263", "secondary-container": "#4d4465", "surface-container-lowest": "#0f0d13", "surface-tint": "#cfbdff", "surface-container-low": "#1c1b20", "inverse-surface": "#e6e1e9", secondary: "#cdc0e8", primary: "#cfbdff", "on-tertiary": "#3e2e00", "on-primary-fixed-variant": "#4e378a", "on-secondary-container": "#beb3da", "on-surface": "#e6e1e9", "tertiary-fixed-dim": "#e7c365"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {gutter: "20px", xs: "4px", unit: "4px", md: "16px", "container-max": "1280px", sm: "8px", xl: "64px", lg: "32px"}, fontFamily: {"headline-md": ["Bebas Neue"], "headline-lg": ["Bebas Neue"], "headline-lg-mobile": ["Bebas Neue"], "body-md": ["Inter"], "body-lg": ["Barlow Condensed"], "label-bold": ["Atkinson Hyperlegible Next"], caption: ["Inter"], "display-xl": ["Bebas Neue"]}, fontSize: {"headline-md": ["32px", {lineHeight: "110%", letterSpacing: "0.04em", fontWeight: "400"}], "headline-lg": ["64px", {lineHeight: "100%", letterSpacing: "0.02em", fontWeight: "400"}], "headline-lg-mobile": ["48px", {lineHeight: "100%", letterSpacing: "0.02em", fontWeight: "400"}], "body-md": ["16px", {lineHeight: "150%", letterSpacing: "0", fontWeight: "400"}], "body-lg": ["18px", {lineHeight: "160%", letterSpacing: "0.02em", fontWeight: "400"}], "label-bold": ["14px", {lineHeight: "120%", letterSpacing: "0.05em", fontWeight: "700"}], caption: ["12px", {lineHeight: "120%", letterSpacing: "0", fontWeight: "500"}], "display-xl": ["96px", {lineHeight: "90%", letterSpacing: "0.02em", fontWeight: "400"}]}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .industrial-grid {
+            background-image: linear-gradient(to right, #211f24 1px, transparent 1px), linear-gradient(to bottom, #211f24 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md industrial-grid">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface w-full top-0 sticky border-b-2 border-outline-variant dark:border-outline-variant z-50">
+<div class="flex justify-between items-center px-gutter py-md w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+<h1 class="font-display-xl text-headline-md text-primary dark:text-primary italic">STRIKE &amp; BEAT</h1>
+</div>
+<nav class="hidden md:flex gap-lg">
+<a class="text-on-surface dark:text-on-surface font-medium uppercase hover:bg-primary hover:text-surface transition-colors duration-100 px-2 py-1" href="#">Inicio</a>
+<a class="text-primary dark:text-primary font-bold border-b-4 border-primary uppercase px-2 py-1" href="#">Combates</a>
+<a class="text-on-surface dark:text-on-surface font-medium uppercase hover:bg-primary hover:text-surface transition-colors duration-100 px-2 py-1" href="#">Artistas</a>
+<a class="text-on-surface dark:text-on-surface font-medium uppercase hover:bg-primary hover:text-surface transition-colors duration-100 px-2 py-1" href="#">Info</a>
+</nav>
+<button class="bg-primary text-on-primary-fixed px-md py-xs font-label-bold uppercase scale-100 active:scale-95 transition-transform">CART</button>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-0 md:px-gutter py-xl">
+<div class="mb-xl px-gutter md:px-0">
+<h2 class="font-headline-lg text-headline-lg uppercase text-primary border-l-8 border-primary pl-md">Próximos Combates</h2>
+<p class="font-body-lg text-on-surface-variant max-w-2xl mt-md">RAW INDUSTRIAL ENERGY. La élite del underground se enfrenta en el cuadrilátero. Sin piedad. Sin límites.</p>
+</div>
+<!-- Fight List -->
+<div class="flex flex-col space-y-gutter">
+<!-- Fight Block 01 -->
+<a class="group block bg-surface-container border-2 border-outline-variant hover:border-primary transition-colors duration-300" href="#">
+<div class="flex flex-col md:flex-row">
+<div class="w-full md:w-1/2 aspect-video md:aspect-auto h-[300px] md:h-[400px] relative overflow-hidden">
+<img class="w-full h-full object-cover filter grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-500" data-alt="High-contrast black and white close-up of a muscular professional boxer with intense expression, sweat glistening under harsh overhead industrial gym lighting. The image captures the grit and raw energy of a combat sports athlete preparing for a match, set against a dark, moody background with subtle textures of concrete and metal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAavwXcGY1iaZkVcutwQ0IqUdA9fo8gVl6R3p3un5LFFjfYML09JADM4U9wP8EiVDaDUNinCbhWknoRnDjt6oza0Skp8NbnydIObo7lFZvi2kqqg2pbtN0s9vCeFIx2kCp51YueZm9E-3Z7cLS0ScDr1NotOo4J5187S4puRF25iVHEYGv6mKRzDWjMBV3LG1h9Xzk3puxXxRSotnDE8T5IZpAShHNWihXGOMcEX-4C2DAXL5B_iMcJYkDFiGX_7_Rp48VqNhAKYSs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+<div class="absolute bottom-md left-md">
+<span class="bg-primary text-surface font-label-bold px-md py-xs uppercase tracking-widest">Main Event</span>
+</div>
+</div>
+<div class="w-full md:w-1/2 p-lg flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-md">
+<h3 class="font-headline-md text-headline-md uppercase text-on-surface leading-tight">Victor "The Hammer" Volkov <br/><span class="text-primary italic">vs</span><br/> Marcus "The Beast" Thorne</h3>
+<div class="text-right">
+<p class="font-headline-md text-headline-md text-primary">22:00</p>
+<p class="font-label-bold text-on-surface-variant">UTC +2</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-lg border-y-2 border-outline-variant py-md mb-lg">
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Weight Class</p>
+<p class="font-label-bold uppercase">Heavyweight</p>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Rounds</p>
+<p class="font-label-bold uppercase">12 Rounds</p>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Arena</p>
+<p class="font-label-bold uppercase">The Iron Works</p>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Record</p>
+<p class="font-label-bold uppercase">24-1 / 18-0</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-bold text-primary group-hover:translate-x-2 transition-transform">ADQUIRIR ENTRADAS →</span>
+<span class="material-symbols-outlined text-4xl group-hover:text-primary" data-icon="confirmation_number">confirmation_number</span>
+</div>
+</div>
+</div>
+</a>
+<!-- Fight Block 02 -->
+<a class="group block bg-surface-container border-2 border-outline-variant hover:border-primary transition-colors duration-300" href="#">
+<div class="flex flex-col md:flex-row-reverse">
+<div class="w-full md:w-1/2 aspect-video md:aspect-auto h-[300px] md:h-[400px] relative overflow-hidden">
+<img class="w-full h-full object-cover filter grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-500" data-alt="Dramatic black and white photography of a boxing ring interior with a focus on the heavy chain-link fence and worn leather of a punching bag. Intense chiaroscuro lighting creates deep shadows and brilliant highlights, emphasizing an industrial, underground gym atmosphere. The mood is aggressive, focused, and unpolished, consistent with a high-energy urban fight venue." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv_BQhJEpc-fQpK2igCfch_dYZ9dHea_DxRX-zOh5p_rUy5F6EDxZC1eVhIJeG9C_2RklQ267VjJ15kPnzHkwD7fGmfhBsEX60gBAdoKwRC1myq4sYuPASwnKp_6y4RRwqUvvGQZ1FeSNnKngVsIC7brF4IKWYPtZBqGoaDsJeNUtgPm4mFWVsSIx8QSLkmM9zNhuUZF_1eBeaMgkzhzEg3CX1NSMRvU5S9YUczMBzyXGYIA0qk5Ax5ycA7phapZzfb0RFa4cF-l0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+<div class="absolute bottom-md right-md text-right">
+<span class="bg-surface-variant text-on-surface font-label-bold px-md py-xs uppercase tracking-widest border border-primary">Co-Main Event</span>
+</div>
+</div>
+<div class="w-full md:w-1/2 p-lg flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-md">
+<h3 class="font-headline-md text-headline-md uppercase text-on-surface leading-tight">Sarah "Striker" Lane <br/><span class="text-primary italic">vs</span><br/> Elena "Shadow" Rossi</h3>
+<div class="text-right">
+<p class="font-headline-md text-headline-md text-primary">21:00</p>
+<p class="font-label-bold text-on-surface-variant">UTC +2</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-lg border-y-2 border-outline-variant py-md mb-lg">
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Weight Class</p>
+<p class="font-label-bold uppercase">Flyweight</p>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Rounds</p>
+<p class="font-label-bold uppercase">10 Rounds</p>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Arena</p>
+<p class="font-label-bold uppercase">The Iron Works</p>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Status</p>
+<p class="font-label-bold uppercase">Title Match</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-bold text-primary group-hover:translate-x-2 transition-transform">ADQUIRIR ENTRADAS →</span>
+<span class="material-symbols-outlined text-4xl group-hover:text-primary" data-icon="confirmation_number">confirmation_number</span>
+</div>
+</div>
+</div>
+</a>
+<!-- Fight Block 03 -->
+<a class="group block bg-surface-container border-2 border-outline-variant hover:border-primary transition-colors duration-300" href="#">
+<div class="flex flex-col md:flex-row">
+<div class="w-full md:w-1/2 aspect-video md:aspect-auto h-[300px] md:h-[400px] relative overflow-hidden">
+<img class="w-full h-full object-cover filter grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-500" data-alt="Atmospheric black and white shot of a dimly lit urban fighting arena under a bridge. Heavy industrial pillars, spray-painted concrete walls, and sharp spotlights create a stark, brutalist environment. A single spotlight hits the center where two fighters are silhouetted, emphasizing the tension and underground street-culture essence of the event." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_YyImK5bmzQSB2kMoYLHfP_DyY6H1vyoCoC6Wy-cCal0gzH2HEHrq_LYbx0gLo6qKTcx7m5Rao8EdsIiInGS5cQZbl-IRdN4kj0bS2-LnXKvoCR6KJMlaQg4DB02iz6rnwCsnBi5Jun8raUeiWVDgq-Eyu02KlaSqtAzgyJLMkJKqT61GxAnSa2_-eU6rqjrvQPLgcZBqdZDNWCSLxxnxzObisosWXcsobqGOmQlLBTbuKkWKwi1HvOxcI6-ttDRHGqFVxgXEqvM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+<div class="absolute bottom-md left-md">
+<span class="bg-surface-variant text-on-surface font-label-bold px-md py-xs uppercase tracking-widest border border-outline-variant">Under Card</span>
+</div>
+</div>
+<div class="w-full md:w-1/2 p-lg flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-md">
+<h3 class="font-headline-md text-headline-md uppercase text-on-surface leading-tight">Dax "The Dog" Miller <br/><span class="text-primary italic">vs</span><br/> Jax "Iron" West</h3>
+<div class="text-right">
+<p class="font-headline-md text-headline-md text-primary">20:15</p>
+<p class="font-label-bold text-on-surface-variant">UTC +2</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-lg border-y-2 border-outline-variant py-md mb-lg">
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Weight Class</p>
+<p class="font-label-bold uppercase">Lightweight</p>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Rounds</p>
+<p class="font-label-bold uppercase">6 Rounds</p>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Arena</p>
+<p class="font-label-bold uppercase">The Iron Works</p>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant uppercase mb-xs">Type</p>
+<p class="font-label-bold uppercase">Exhibition</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-bold text-primary group-hover:translate-x-2 transition-transform">ADQUIRIR ENTRADAS →</span>
+<span class="material-symbols-outlined text-4xl group-hover:text-primary" data-icon="confirmation_number">confirmation_number</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-xl border-t-2 border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter px-gutter max-w-container-max mx-auto">
+<div class="md:col-span-6">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-md italic">STRIKE &amp; BEAT</h2>
+<p class="font-body-md text-on-surface-variant uppercase tracking-tighter mb-lg">© 2024 STRIKE &amp; BEAT. RAW INDUSTRIAL ENERGY.</p>
+</div>
+<div class="md:col-span-6 grid grid-cols-2 gap-lg">
+<div class="flex flex-col gap-sm">
+<a class="font-body-md text-on-surface-variant uppercase tracking-tighter hover:text-primary transition-opacity hover:opacity-80" href="#">Terms of Service</a>
+<a class="font-body-md text-on-surface-variant uppercase tracking-tighter hover:text-primary transition-opacity hover:opacity-80" href="#">Privacy Policy</a>
+</div>
+<div class="flex flex-col gap-sm">
+<a class="font-body-md text-on-surface-variant uppercase tracking-tighter hover:text-primary transition-opacity hover:opacity-80" href="#">Contact</a>
+<a class="font-body-md text-on-surface-variant uppercase tracking-tighter hover:text-primary transition-opacity hover:opacity-80" href="#">Press Kit</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface-container-highest dark:bg-surface-container-highest border-t-4 border-primary">
+<div class="flex justify-around items-center w-full h-16">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-caption text-caption uppercase mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-surface p-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="sports_martial_arts">sports_martial_arts</span>
+<span class="font-caption text-caption uppercase mt-1">Fights</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="album">album</span>
+<span class="font-caption text-caption uppercase mt-1">Music</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="local_activity">local_activity</span>
+<span class="font-caption text-caption uppercase mt-1">Tickets</span>
+</a>
+</div>
+</nav>
+</body></html>

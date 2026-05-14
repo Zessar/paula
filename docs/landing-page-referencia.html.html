@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400;500;700&amp;family=Barlow+Condensed:wght@400;500;700&amp;family=Atkinson+Hyperlegible+Next:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-container-high": "#2b292f", "on-primary-fixed": "#22005d", surface: "#141318", "on-tertiary-fixed-variant": "#594400", "on-error-container": "#ffdad6", "primary-fixed": "#e9ddff", "inverse-on-surface": "#312f35", outline: "#948e9c", "inverse-primary": "#6750a4", "surface-variant": "#36343a", "on-background": "#e6e1e9", error: "#ffb4ab", "secondary-fixed": "#e8ddff", "surface-container": "#201f24", "surface-dim": "#141318", tertiary: "#e7c365", "surface-container-highest": "#36343a", "on-primary-container": "#e0d2ff", "outline-variant": "#494551", "on-secondary": "#342b4b", "primary-fixed-dim": "#cfbdff", "on-tertiary-fixed": "#241a00", "on-surface-variant": "#cbc4d2", "on-primary": "#371e72", "surface-bright": "#3a383e", "tertiary-fixed": "#ffdf93", "on-error": "#690005", "on-tertiary-container": "#503d00", "on-secondary-fixed": "#1e1635", "secondary-fixed-dim": "#cdc0e8", background: "#141318", "primary-container": "#6750a4", "error-container": "#93000a", "tertiary-container": "#c9a74d", "on-secondary-fixed-variant": "#4a4263", "secondary-container": "#4d4465", "surface-container-lowest": "#0f0d13", "surface-tint": "#cfbdff", "surface-container-low": "#1c1b20", "inverse-surface": "#e6e1e9", secondary: "#cdc0e8", primary: "#cfbdff", "on-tertiary": "#3e2e00", "on-primary-fixed-variant": "#4e378a", "on-secondary-container": "#beb3da", "on-surface": "#e6e1e9", "tertiary-fixed-dim": "#e7c365"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {gutter: "20px", xs: "4px", unit: "4px", md: "16px", "container-max": "1280px", sm: "8px", xl: "64px", lg: "32px"}, fontFamily: {"headline-md": ["Bebas Neue"], "headline-lg": ["Bebas Neue"], "headline-lg-mobile": ["Bebas Neue"], "body-md": ["Inter"], "body-lg": ["Barlow Condensed"], "label-bold": ["Atkinson Hyperlegible Next"], caption: ["Inter"], "display-xl": ["Bebas Neue"]}, fontSize: {"headline-md": ["32px", {lineHeight: "110%", letterSpacing: "0.04em", fontWeight: "400"}], "headline-lg": ["64px", {lineHeight: "100%", letterSpacing: "0.02em", fontWeight: "400"}], "headline-lg-mobile": ["48px", {lineHeight: "100%", letterSpacing: "0.02em", fontWeight: "400"}], "body-md": ["16px", {lineHeight: "150%", letterSpacing: "0", fontWeight: "400"}], "body-lg": ["18px", {lineHeight: "160%", letterSpacing: "0.02em", fontWeight: "400"}], "label-bold": ["14px", {lineHeight: "120%", letterSpacing: "0.05em", fontWeight: "700"}], caption: ["12px", {lineHeight: "120%", letterSpacing: "0", fontWeight: "500"}], "display-xl": ["96px", {lineHeight: "90%", letterSpacing: "0.02em", fontWeight: "400"}]}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0a0a0a;
+            color: #e6e0e9;
+        }
+        .brutalist-border {
+            border: 2px solid #36343a;
+        }
+        .neon-accent {
+            background-color: #facc15;
+            color: #0a0a0a;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface w-full top-0 sticky z-[100] border-b-2 border-outline-variant dark:border-outline-variant flat no shadows">
+<div class="flex justify-between items-center px-gutter py-md w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary dark:text-primary">menu</span>
+<h1 class="font-display-xl text-display-xl text-primary dark:text-primary italic">STRIKE &amp; BEAT</h1>
+</div>
+<nav class="hidden md:flex gap-lg items-center">
+<a class="text-primary dark:text-primary font-bold border-b-4 border-primary px-sm py-xs" href="#">Inicio</a>
+<a class="text-on-surface dark:text-on-surface font-medium uppercase hover:bg-primary hover:text-surface transition-colors duration-100 px-sm py-xs" href="#">Combates</a>
+<a class="text-on-surface dark:text-on-surface font-medium uppercase hover:bg-primary hover:text-surface transition-colors duration-100 px-sm py-xs" href="#">Artistas</a>
+<a class="text-on-surface dark:text-on-surface font-medium uppercase hover:bg-primary hover:text-surface transition-colors duration-100 px-sm py-xs" href="#">Info</a>
+<a class="text-on-surface dark:text-on-surface font-medium uppercase hover:bg-primary hover:text-surface transition-colors duration-100 px-sm py-xs" href="#">Entradas</a>
+</nav>
+<button class="bg-primary text-on-primary px-lg py-sm font-label-bold uppercase transition-transform active:scale-95">CART</button>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative min-h-[795px] flex flex-col items-center justify-center text-center px-gutter py-xl">
+<div class="absolute inset-0 z-0 opacity-40">
+<img alt="Boxing Gym Atmosphere" class="w-full h-full object-cover grayscale" data-alt="A cinematic, high-contrast black and white shot of an underground industrial boxing gym. The space is filled with heavy shadows and sharp beams of light cutting through hazy air. Chain-link fences and concrete textures dominate the scene. The mood is gritty, raw, and intense, reflecting a brutalist urban aesthetic with no soft edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBg0VWvA2skJ8W53npl0ev84Xq3QCI-sPfymiVDGbJET27co9VH3ORf3TyRp8MaGs9b59qUggy4so5n2v51cQgc42oJrjbTwBIGDJ82zGwtd9xhSMSyLqe2NktaVEa6pJoF_OCtzKrXGt6pkTPpcXYXVoTyY5feqG9-G-aGhBTTzI4dtgerVL2_Iwx7bI-AuRyVnLZjqotnQi9UzOw6kJAtkawwm_aIzK36GvjLm2rK6m9CRSIly_mO5OT-ha_fkuhhvk8MrHsF6uo"/>
+</div>
+<div class="relative z-10 max-w-4xl">
+<h2 class="font-display-xl text-display-xl mb-md leading-none">STRIKE &amp; BEAT</h2>
+<div class="flex flex-col md:flex-row gap-md justify-center items-center mb-xl">
+<div class="brutalist-border px-lg py-md bg-surface-container-lowest">
+<p class="font-headline-md text-headline-md">15 JUNIO 2024</p>
+</div>
+<div class="brutalist-border px-lg py-md bg-surface-container-lowest">
+<p class="font-headline-md text-headline-md uppercase">Pabellón Arroyo Vallejo</p>
+</div>
+</div>
+<a class="inline-block bg-[#facc15] text-[#0a0a0a] font-display-xl text-[48px] px-xl py-lg uppercase hover:bg-white transition-colors tracking-tighter" href="#">
+                COMPRAR ENTRADAS
+            </a>
+</div>
+</section>
+<!-- Sponsors Carousel -->
+<div class="bg-surface-container-high border-y-2 border-outline-variant py-md overflow-hidden whitespace-nowrap">
+<div class="flex gap-xl animate-marquee items-center px-gutter">
+<span class="font-headline-md text-on-surface-variant opacity-50">SPONSOR_01</span>
+<span class="font-headline-md text-on-surface-variant opacity-50">SPONSOR_02</span>
+<span class="font-headline-md text-on-surface-variant opacity-50">SPONSOR_03</span>
+<span class="font-headline-md text-on-surface-variant opacity-50">SPONSOR_04</span>
+<span class="font-headline-md text-on-surface-variant opacity-50">SPONSOR_01</span>
+<span class="font-headline-md text-on-surface-variant opacity-50">SPONSOR_02</span>
+<span class="font-headline-md text-on-surface-variant opacity-50">SPONSOR_03</span>
+<span class="font-headline-md text-on-surface-variant opacity-50">SPONSOR_04</span>
+</div>
+</div>
+<!-- El Evento Section -->
+<section class="py-xl px-gutter max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-12 gap-lg items-center">
+<div class="md:col-span-7">
+<h3 class="font-headline-lg text-headline-lg mb-lg uppercase">El Evento</h3>
+<p class="font-body-lg text-body-lg mb-md leading-relaxed">
+                STRIKE &amp; BEAT no es solo un espectáculo; es un golpe contra la exclusión. Todo lo recaudado será destinado a la <span class="text-tertiary font-bold underline">Asociación Caminando</span>, apoyando proyectos de integración social y deportiva en barrios vulnerables. 
+            </p>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Unimos la energía del ring con la potencia del escenario urbano para crear una noche de pura resistencia y solidaridad.
+            </p>
+</div>
+<div class="md:col-span-5">
+<div class="brutalist-border p-sm bg-surface-container">
+<img alt="Boxing solidarity" class="w-full grayscale" data-alt="A gritty close-up image of a person's hands being wrapped in boxing bandages. The lighting is harsh and monochromatic, emphasizing the texture of the cloth and the tension in the hands. The overall aesthetic is industrial and raw, highlighting the preparation and determination behind a combat sports event." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfE-HPZlwJMUKaBeFgU-FM3Q4pwTNO2eMNKcpXLDIObs1ELhtXyeILqNg0qaeseqpbWS6bJ1XFfva585kgsz4hs3MzoASjwYw2PIez7rUgs16bizskOVhCOmJT5Q4n_eqJeNH_CcAc2fjeRwpCI3_qsmYVY-SNGJl_jHUT9S1CKKWtJXHPgKnYd2u6FHo8A7xatMhnjITNeSJaTlvzrML-5AsnR4EKbiupKkr4LgnTBSEoPKGTto1J-kKkaX4152zEskKHVdDp1b8"/>
+</div>
+</div>
+</section>
+<!-- Featured Fights -->
+<section class="py-xl bg-surface-container-low px-gutter">
+<div class="max-w-container-max mx-auto">
+<h3 class="font-headline-lg text-headline-lg mb-xl text-center uppercase">Cartelera Estelar</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Fight 1 -->
+<div class="bg-surface-container brutalist-border overflow-hidden group">
+<div class="flex h-64">
+<div class="w-1/2 overflow-hidden border-r-2 border-outline-variant relative">
+<img alt="Fighter 1" class="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" data-alt="A dramatic black and white portrait of a determined male boxer in a fighting stance. High-key side lighting reveals sweat and intense muscle definition. The background is pitch black, creating a focused, high-contrast industrial look that matches the Strike &amp; Beat brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASjEWn-loHuq2yTE5pPsyYiySj17FIj097qgeTdosqCeIBA5zQ25W578ObeMsoeQ1hWOIrJhiyUhLz6hgbq94Wf4uapg_Y6uTY8HEOh5dNJjoS0_hcPn2w9uszlSoUSZqDnRUgNnNGN9Ih3qFYgRkJX37NEx2wl6CNr5QkH7dHU00EhbTqMwgOFH-FLH942Oz3Sr_q3he0vkbUlAfPqwwZrHJaAWzAEc7KV-BpJylczH2C9FQEONDwmmVtz7Y2_coNjiJLPtkZ7NQ"/>
+<div class="absolute bottom-0 left-0 bg-primary text-on-primary px-sm py-xs font-label-bold">R. "EL LOBO"</div>
+</div>
+<div class="w-1/2 overflow-hidden relative">
+<img alt="Fighter 2" class="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" data-alt="A monochromatic action shot of a professional fighter mid-punch. The image is grainy and high-contrast, with sharp shadows and intense focal lighting. The style is urban and raw, emphasizing the grit and power of the Strike &amp; Beat combat sports event." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvJ2fRR9b9OuYmgXdB2tEU_kHo8NqLh6DTRIZJ56WQLKtXeDSYMytqG0eb9WHc_k8rkhC45MBEZAeC3cZbEeA0zxQxRLdgL_iSAkVvpQC9JfLkkKwrHTUWNtv-goffK_t0DAbZRF-5GEPAhy3iiO2XW2-mRxTSl7WwNj6qlN8wnis_qyfnPw_Im4TXbAgMHHrPG74Mj24-F1cLC4DUSppqpeudSKM1ULD2iAAjWSS2rf-XFT-Zq848hhBeAgQhBy2gUieCLBgIzpg"/>
+<div class="absolute bottom-0 right-0 bg-tertiary text-on-tertiary px-sm py-xs font-label-bold">MARC "THE TANK"</div>
+</div>
+</div>
+<div class="p-md text-center bg-surface-container-highest">
+<p class="font-headline-md text-headline-md text-primary">PESO PESADO | 5 ROUNDS</p>
+</div>
+</div>
+<!-- Fight 2 -->
+<div class="bg-surface-container brutalist-border overflow-hidden group">
+<div class="flex h-64">
+<div class="w-1/2 overflow-hidden border-r-2 border-outline-variant relative">
+<img alt="Fighter 3" class="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" data-alt="A portrait of a female fighter with intense focus, sweat glistening on her skin. Shot in a black and white high-contrast style with industrial backlighting. The aesthetic is hard-hitting, unpolished, and street-oriented, consistent with the event's raw energy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5nkwc3uPf56OqvVhy5dPZSnL3_O2nAW7Byf5z8Y05UdcZuwyT0UY1NWEUeXP0ihxmswsHNH9ptnqQyaJQZRpl70kd0p0udwaG44rx8xgJ9rhyScLpLInOqeYYNC8qZXSNXhdatckKJRExz3ynhGcIbyAJmYCOCYtjGU1aLOCSqvlPRcgyMHl5-TaUSMi_ZErFdx3KDwz5kRNtf04UCSQI6hLMwixhxIDJKRR1Y_UIWA5X0q78YO3sU9IpRW20Hl21z6XdKX6uA-I"/>
+<div class="absolute bottom-0 left-0 bg-primary text-on-primary px-sm py-xs font-label-bold">SARAY "LA JEFA"</div>
+</div>
+<div class="w-1/2 overflow-hidden relative">
+<img alt="Fighter 4" class="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" data-alt="An athlete in deep concentration before a match, monochromatic photography with heavy shadows and sharp highlights. The environment is a dark industrial space. The mood is uncompromising and serious, reflecting the grit of underground combat sports." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrJcO7EjTupvjQrLEKESCNcJYUu2ovQ9Ju-wFdWO4tuBsL7GrsM0VnIWg6oMrJuwRevxaPu93PKVgdXKvtLTRpeq4VZz2FfKAktdGlCaxl-7aCodB3ETwH61a7WCKWs5l51_6NqVAe6YIOALQ8Xu9QPLeIx1wOyJQSniwNX3WM0hynkquP-3H_EpONzuO8KgwW-QhP02X8xXPjuYpTuP5SL8c-qdINUxSLfoVQ5vls5345NG0gfYYjKJggILwrD5Shkxs6SKMftx0"/>
+<div class="absolute bottom-0 right-0 bg-tertiary text-on-tertiary px-sm py-xs font-label-bold">LUNA "X"</div>
+</div>
+</div>
+<div class="p-md text-center bg-surface-container-highest">
+<p class="font-headline-md text-headline-md text-primary">PESO PLUMA | 3 ROUNDS</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Artists Section -->
+<section class="py-xl px-gutter max-w-container-max mx-auto">
+<h3 class="font-headline-lg text-headline-lg mb-xl uppercase">The Beat: Artistas Invitados</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="relative overflow-hidden group border-2 border-transparent hover:border-primary transition-all">
+<img alt="Artist 1" class="w-full aspect-[3/4] object-cover grayscale" data-alt="A black and white photograph of a hip-hop artist performing on stage under a single spotlight. Smoke and lens flare add to the gritty urban atmosphere. The image is high-contrast with deep blacks and bright whites, capturing the raw energy of a live performance in an industrial setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3CW79rAfa6ah19NmGAui9oCk6_aK5Y5sDgge4Ew5i-5WWnm4f1ayKBOQWTY6ahFX0iWwozySk8YNEl_O1JFFLJiJalkHaOu6V6iwhDHnamfxQsEoJnsiB4vkGPSzgSYWNMmBswXCRJAmRp32othrThMgYh0mjU6o5xmcvwXVEOQi3mGsGxtd8g2Oosicbyet5-9rMx8XwlAnaT3zTruNJo3wHU2hP0E4Avp_iiJi8JmkT6wyBAz8w6AAG7R-476up7VgEXz9ab2U"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+<div class="absolute bottom-0 p-md w-full">
+<h4 class="font-headline-md text-headline-md text-white">MC VOLTAJE</h4>
+<p class="font-caption text-primary mb-md">RAP / HARDCORE</p>
+<button class="w-full bg-surface text-primary border border-primary py-xs font-label-bold hover:bg-primary hover:text-surface">VER PERFIL</button>
+</div>
+</div>
+<div class="relative overflow-hidden group border-2 border-transparent hover:border-primary transition-all">
+<img alt="Artist 2" class="w-full aspect-[3/4] object-cover grayscale" data-alt="A monochromatic shot of a rapper holding a vintage microphone in a dark studio. Harsh lighting creates strong shadows. The style is industrial and minimalist, focusing on the grit and authenticity of the artist. The palette is strictly black and white with a touch of neon yellow light in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC25J-6cQCBtUtVembf3DrSldvCxk7vo-7221amGSPWZFkGk81hVfgDOXsbMrqStJwLWW9c3wmBh6gENOKCM7FloD5M0LD6n1v286x3hdU-iqQUUB-p8n5Px0TOkMKCcGoSPzg_-ykpOvpchYvA7kCSFqoH-cQZqnCKrOhtK2_xk0scIVPEqk1oVK6xsqv42hDVz7fyZDBw7lAMeBKoLgMTu4dzybHXEoR8RZvkODE6qAjzJ1XV8SXqIYqf15XLP7k22YxeMastDpQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+<div class="absolute bottom-0 p-md w-full">
+<h4 class="font-headline-md text-headline-md text-white">K-OS URBANO</h4>
+<p class="font-caption text-primary mb-md">DRILL / TRAP</p>
+<button class="w-full bg-surface text-primary border border-primary py-xs font-label-bold hover:bg-primary hover:text-surface">VER PERFIL</button>
+</div>
+</div>
+<div class="relative overflow-hidden group border-2 border-transparent hover:border-primary transition-all">
+<img alt="Artist 3" class="w-full aspect-[3/4] object-cover grayscale" data-alt="A female singer performing in a high-contrast black and white aesthetic. She is wearing street-style clothing and standing against a concrete wall. The lighting is direct and dramatic. The mood is powerful and defiant, reflecting the underground urban culture of the event." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDed1o9V-Vh_arOZ2ByoC8Xv1-uzIe4KAPQwN9gUFmWidwogSF_3750X9ilEFpuZGYs5e7KH6EYq3nhcLtoV0WFUHJwzlwprh3W-Wf9MqNFG8Bo_q3Ne3uQWQ-OprcKBUWDnPQSSKuVZTLNTnMqw4w0OjQrAATPt4oxI2kOm-xfz_k24ul4CuU5NulYqyixm1OJuIYsmWCAbTM1Feqko1kFykRGaFDrWo2EZdLEwuRBOY91Cw5bb-k9_rP8wPldNW2tOXsuayzIKqk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+<div class="absolute bottom-0 p-md w-full">
+<h4 class="font-headline-md text-headline-md text-white">NEBULOSA</h4>
+<p class="font-caption text-primary mb-md">R&amp;B / SOUL</p>
+<button class="w-full bg-surface text-primary border border-primary py-xs font-label-bold hover:bg-primary hover:text-surface">VER PERFIL</button>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-xl bg-surface-container-low px-gutter">
+<div class="max-w-3xl mx-auto">
+<h3 class="font-headline-lg text-headline-lg mb-xl text-center uppercase">Preguntas Frecuentes</h3>
+<div class="space-y-xs">
+<div class="brutalist-border bg-surface p-md flex justify-between items-center cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="font-label-bold uppercase">¿A qué hora empieza el evento?</span>
+<span class="material-symbols-outlined">add</span>
+</div>
+<div class="brutalist-border bg-surface p-md flex justify-between items-center cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="font-label-bold uppercase">¿Hay límite de edad?</span>
+<span class="material-symbols-outlined">add</span>
+</div>
+<div class="brutalist-border bg-surface p-md flex justify-between items-center cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="font-label-bold uppercase">¿Cómo puedo donar a la Asociación Caminando?</span>
+<span class="material-symbols-outlined">add</span>
+</div>
+<div class="brutalist-border bg-surface p-md flex justify-between items-center cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="font-label-bold uppercase">¿Dónde recojo mi pulsera?</span>
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Location Section -->
+<section class="py-xl px-gutter max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg brutalist-border p-lg bg-surface-container">
+<div>
+<h3 class="font-headline-md text-headline-md mb-md uppercase">Ubicación</h3>
+<h4 class="font-display-xl text-[48px] text-primary mb-sm leading-none">Pabellón Arroyo Vallejo</h4>
+<p class="font-body-lg text-body-lg mb-lg">Calle de la Victoria, 12, 28005 Madrid.</p>
+<div class="flex gap-md">
+<a class="bg-white text-black px-md py-sm font-label-bold uppercase flex items-center gap-xs" href="#">
+<span class="material-symbols-outlined">map</span> CÓMO LLEGAR
+                    </a>
+</div>
+</div>
+<div class="h-64 brutalist-border grayscale overflow-hidden">
+<img alt="Location Map" class="w-full h-full object-cover" data-location="Madrid, Spain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1C_-ff41Aki4u_kYps4IU2A651tAmpaw0dRl8jb65yof7FssfUUfnpMekmopDxwC5dU_I6TDx8U5YPz3ruBWL86kbIB_eok0A5G3DJYzmOKsSLqHhrRYLxQfC-1HLjoT5h4zJyQtVhwge9J6nKSMrko6lLBR8u_BPb_J_B0-tezR1QbLHVIwM0bGsNUOocWg52NOC7OK-ayQ8cDDUSL0h6EIex6Ox7WRL5GeJhKCTs3J9K-mdZCmRQHeBWU5HAI33d_GVQFxsqzU"/>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-xl border-t-2 border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter px-gutter max-w-container-max mx-auto">
+<div class="md:col-span-6">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-md">STRIKE &amp; BEAT</h2>
+<p class="font-body-md text-body-md uppercase tracking-tighter opacity-70">
+                    © 2024 STRIKE &amp; BEAT. RAW INDUSTRIAL ENERGY.
+                </p>
+</div>
+<div class="md:col-span-6 grid grid-cols-2 md:grid-cols-4 gap-md items-start">
+<a class="text-on-surface-variant font-body-md uppercase tracking-tighter hover:text-primary transition-opacity hover:opacity-80" href="#">Terms of Service</a>
+<a class="text-on-surface-variant font-body-md uppercase tracking-tighter hover:text-primary transition-opacity hover:opacity-80" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant font-body-md uppercase tracking-tighter hover:text-primary transition-opacity hover:opacity-80" href="#">Contact</a>
+<a class="text-on-surface-variant font-body-md uppercase tracking-tighter hover:text-primary transition-opacity hover:opacity-80" href="#">Press Kit</a>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface-container-highest dark:bg-surface-container-highest border-t-4 border-primary h-16 flex justify-around items-center">
+<a class="flex flex-col items-center justify-center bg-primary text-surface p-2 w-full h-full active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-caption text-caption uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 w-full h-full active:scale-90 hover:text-primary" href="#">
+<span class="material-symbols-outlined">sports_martial_arts</span>
+<span class="font-caption text-caption uppercase">Fights</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 w-full h-full active:scale-90 hover:text-primary" href="#">
+<span class="material-symbols-outlined">album</span>
+<span class="font-caption text-caption uppercase">Music</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 w-full h-full active:scale-90 hover:text-primary" href="#">
+<span class="material-symbols-outlined">local_activity</span>
+<span class="font-caption text-caption uppercase">Tickets</span>
+</a>
+</nav>
+</body></html>
