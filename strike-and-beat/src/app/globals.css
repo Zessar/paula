@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-surface-container-high: #2b292f;
+  --color-on-primary-fixed: #22005d;
+  --color-surface: #141318;
+  --color-on-tertiary-fixed-variant: #594400;
+  --color-on-error-container: #ffdad6;
+  --color-primary-fixed: #e9ddff;
+  --color-inverse-on-surface: #312f35;
+  --color-outline: #948e9c;
+  --color-inverse-primary: #6750a4;
+  --color-surface-variant: #36343a;
+  --color-on-background: #e6e1e9;
+  --color-error: #ffb4ab;
+  --color-secondary-fixed: #e8ddff;
+  --color-surface-container: #201f24;
+  --color-surface-dim: #141318;
+  --color-tertiary: #e7c365;
+  --color-surface-container-highest: #36343a;
+  --color-on-primary-container: #e0d2ff;
+  --color-outline-variant: #494551;
+  --color-on-secondary: #342b4b;
+  --color-primary-fixed-dim: #cfbdff;
+  --color-on-tertiary-fixed: #241a00;
+  --color-on-surface-variant: #cbc4d2;
+  --color-on-primary: #371e72;
+  --color-surface-bright: #3a383e;
+  --color-tertiary-fixed: #ffdf93;
+  --color-on-error: #690005;
+  --color-on-tertiary-container: #503d00;
+  --color-on-secondary-fixed: #1e1635;
+  --color-secondary-fixed-dim: #cdc0e8;
+  --color-background: #141318;
+  --color-primary-container: #6750a4;
+  --color-error-container: #93000a;
+  --color-tertiary-container: #c9a74d;
+  --color-on-secondary-fixed-variant: #4a4263;
+  --color-secondary-container: #4d4465;
+  --color-surface-container-lowest: #0f0d13;
+  --color-surface-tint: #cfbdff;
+  --color-surface-container-low: #1c1b20;
+  --color-inverse-surface: #e6e1e9;
+  --color-secondary: #cdc0e8;
+  --color-primary: #cfbdff;
+  --color-on-tertiary: #3e2e00;
+  --color-on-primary-fixed-variant: #4e378a;
+  --color-on-secondary-container: #beb3da;
+  --color-on-surface: #e6e1e9;
+  --color-tertiary-fixed-dim: #e7c365;
+  --color-neon-yellow: #facc15;
+
+  --spacing-gutter: 20px;
+  --spacing-xs: 4px;
+  --spacing-unit: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+  --spacing-xl: 64px;
+  --spacing-container-max: 1280px;
+
+  --font-headline-md: "Bebas Neue", var(--font-bebas-neue);
+  --font-headline-lg: "Bebas Neue", var(--font-bebas-neue);
+  --font-headline-lg-mobile: "Bebas Neue", var(--font-bebas-neue);
+  --font-body-md: "Inter", sans-serif;
+  --font-body-lg: "Barlow Condensed", var(--font-barlow-condensed);
+  --font-label-bold: "Atkinson Hyperlegible Next", var(--font-atkinson-hyperlegible);
+  --font-caption: "Inter", sans-serif;
+  --font-display-xl: "Bebas Neue", var(--font-bebas-neue);
+
+  --radius-none: 0px;
+  --radius-sm: 0px;
+  --radius: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-full: 0px;
+}
+
+@utility text-headline-md {
+  font-size: 32px;
+  line-height: 110%;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+}
+
+@utility text-headline-lg {
+  font-size: 64px;
+  line-height: 100%;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+@utility text-headline-lg-mobile {
+  font-size: 48px;
+  line-height: 100%;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+@utility text-body-md {
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@utility text-body-lg {
+  font-size: 18px;
+  line-height: 160%;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+@utility text-label-bold {
+  font-size: 14px;
+  line-height: 120%;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+@utility text-caption {
+  font-size: 12px;
+  line-height: 120%;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@utility text-display-xl {
+  font-size: 96px;
+  line-height: 90%;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  min-height: max(884px, 100dvh);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.brutalist-border {
+  border: 2px solid var(--color-surface-variant);
+}
+
+.neon-accent {
+  background-color: #facc15;
+  color: #0a0a0a;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animaciones */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee 50s linear infinite;
+}
+
+* {
+  border-radius: 0px !important;
+}
