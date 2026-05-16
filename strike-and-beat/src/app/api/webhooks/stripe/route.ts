@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { createServerClient } from "@supabase/ssr";
+import { generateQRCode } from "@/lib/qr";
 
 // Necesitamos el Supabase Admin Client para saltarnos las reglas RLS e insertar las compras
 function getAdminSupabase() {
@@ -117,7 +118,38 @@ export async function POST(req: Request) {
         }
       }
 
-      console.log("✅ Pedido creado y stock actualizado correctamente.");
+      console.log("Pedido creado y stock actualizado correctamente.");
+
+      // 6. GENERAR ENTRADAS QR INDIVIDUALES
+      // Por cada ticket comprado, creamos una fila en ticket_entries con un QR único
+      const ticketEntries: any[] = [];
+      for (const item of cartData) {
+        for (let i = 0; i < item.q; i++) {
+          ticketEntries.push({
+            order_id: order.id,
+            ticket_id: item.id,
+            qr_code: generateQRCode(), // UUID v4 impredecible
+            customer_name: customerName,
+            customer_email: customerEmail,
+            status: "valid",
+            is_vip: false,
+            ticket_price: item.p || 0, // Precio unitario del ticket
+          });
+        }
+      }
+
+      if (ticketEntries.length > 0) {
+        const { error: qrError } = await supabase
+          .from("ticket_entries")
+          .insert(ticketEntries);
+
+        if (qrError) {
+          console.error("Error al generar entradas QR:", qrError);
+          // No bloqueamos el flujo: el pedido ya se creó correctamente
+        } else {
+          console.log(`${ticketEntries.length} entrada(s) QR generada(s) correctamente.`);
+        }
+      }
 
       // Forzar revalidación de la caché para que el badge de stock se actualice en la web
       try {

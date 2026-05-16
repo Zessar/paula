@@ -16,11 +16,11 @@ export async function FeaturedFights() {
               <div className="bg-surface-container brutalist-border overflow-hidden group cursor-pointer hover:border-primary transition-all flex flex-col h-full">
                 <div className="flex h-64 shrink-0">
                   <div className="w-1/2 overflow-hidden border-r-2 border-outline-variant relative">
-                    <img alt={fight.nameA} className="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" src={fight.imageA}/>
+                    <img alt={fight.nameA} className="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" src={fight.imageA || "https://placehold.co/400x600/111/333?text=" + encodeURIComponent(fight.nameA)}/>
                     <div className="absolute bottom-0 left-0 bg-primary text-on-primary px-sm py-xs font-label-bold">{fight.nameA}</div>
                   </div>
                   <div className="w-1/2 overflow-hidden relative">
-                    <img alt={fight.nameB} className="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" src={fight.imageB}/>
+                    <img alt={fight.nameB} className="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" src={fight.imageB || "https://placehold.co/400x600/111/333?text=" + encodeURIComponent(fight.nameB)}/>
                     <div className="absolute bottom-0 right-0 bg-neon-yellow text-surface px-sm py-xs font-label-bold">{fight.nameB}</div>
                   </div>
                 </div>

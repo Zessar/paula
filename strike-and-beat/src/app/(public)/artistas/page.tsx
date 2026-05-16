@@ -37,8 +37,12 @@ export default async function ArtistasPage() {
                 key={artist.id} 
                 className={`group relative flex flex-col ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} bg-surface-container border-2 border-outline-variant hover:${accentBorder} transition-all duration-300 overflow-hidden`}
               >
-                <div className="w-full md:w-1/3 aspect-[4/5] md:aspect-square overflow-hidden grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500">
-                  <img className="w-full h-full object-cover" alt={artist.name} src={artist.image}/>
+                <div className="w-full md:w-1/3 aspect-[4/5] md:aspect-square overflow-hidden grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500 bg-surface-container-highest flex items-center justify-center">
+                  {artist.image ? (
+                    <img className="w-full h-full object-cover" alt={artist.name} src={artist.image}/>
+                  ) : (
+                    <span className="text-outline-variant font-headline-sm uppercase opacity-50">SIN FOTO</span>
+                  )}
                 </div>
                 <div className="flex-1 p-lg flex flex-col justify-between">
                   <div>

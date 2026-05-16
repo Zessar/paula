@@ -39,19 +39,27 @@ export default async function CombatesPage() {
                 {/* Image */}
                 <div className="w-full md:w-1/2 aspect-video md:aspect-auto h-[300px] md:h-[400px] relative overflow-hidden">
                   <div className="flex h-full">
-                    <div className="w-1/2 overflow-hidden border-r border-outline-variant/30">
-                      <img
-                        className="w-full h-full object-cover filter grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-500"
-                        alt={fight.nameA}
-                        src={fight.imageA}
-                      />
+                    <div className="w-1/2 overflow-hidden border-r border-outline-variant/30 bg-surface-container-highest flex items-center justify-center">
+                      {fight.imageA ? (
+                        <img
+                          className="w-full h-full object-cover filter grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-500"
+                          alt={fight.nameA}
+                          src={fight.imageA}
+                        />
+                      ) : (
+                        <span className="text-outline-variant font-headline-sm uppercase opacity-50">SIN FOTO</span>
+                      )}
                     </div>
-                    <div className="w-1/2 overflow-hidden">
-                      <img
-                        className="w-full h-full object-cover filter grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-500"
-                        alt={fight.nameB}
-                        src={fight.imageB}
-                      />
+                    <div className="w-1/2 overflow-hidden bg-surface-container-highest flex items-center justify-center">
+                      {fight.imageB ? (
+                        <img
+                          className="w-full h-full object-cover filter grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-500"
+                          alt={fight.nameB}
+                          src={fight.imageB}
+                        />
+                      ) : (
+                        <span className="text-outline-variant font-headline-sm uppercase opacity-50">SIN FOTO</span>
+                      )}
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>

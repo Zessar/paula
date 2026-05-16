@@ -36,5 +36,14 @@ export async function assertAdmin() {
     throw new Error("Acceso denegado: no autenticado.");
   }
   
+  const adminEmails = [
+    "veladadeboxeobeneficaazuqueca@hotmail.com",
+    "sequerone37@gmail.com"
+  ];
+  
+  if (!adminEmails.includes(user.email || "")) {
+    throw new Error("Acceso denegado: no tienes permisos de administrador.");
+  }
+  
   return user;
 }

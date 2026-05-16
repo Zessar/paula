@@ -17,6 +17,7 @@ const NAV_ITEMS = [
   { href: "/admin/patrocinadores", label: "Sponsors", icon: "handshake" },
   { href: "/admin/faq", label: "FAQs", icon: "help" },
   { href: "/admin/entradas", label: "Entradas", icon: "confirmation_number" },
+  { href: "/admin/entradas-qr", label: "Entradas QR", icon: "qr_code_2" },
   { href: "/admin/ajustes", label: "Ajustes", icon: "settings" },
 ]
 
@@ -31,7 +32,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const isActive = (href: string) => {
     if (href === "/admin") return pathname === "/admin"
-    return pathname.startsWith(href)
+    return pathname === href || pathname.startsWith(`${href}/`)
   }
 
   return (
