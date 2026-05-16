@@ -98,6 +98,7 @@ export async function POST(req: Request) {
 
         cartDataForWebhook.push({
           id: dbTicket.id,
+          name: dbTicket.name,
           q: item.quantity,
           p: Number(dbTicket.price)
         });

@@ -7,139 +7,178 @@ export interface TicketPDFData {
   eventDate: string;
   eventDoorsOpen: string;
   eventLocation: string;
+  eventLogoUrl?: string;
   weighInDate?: string;
   weighInDoors?: string;
   weighInIsFree?: boolean;
   tickets: {
-    id: string; // The specific UUID of the ticket entry
-    type: string; // "General", "VIP", etc.
+    id: string; 
+    type: string; 
     price: number;
-    qrCode: string; // The SB_TKT_ token
+    qrCode: string; 
+    entryNumber?: number;
   }[];
 }
 
 /**
- * Genera un PDF que contiene todas las entradas de una compra.
- * Retorna el PDF como un buffer de bytes.
+ * Genera un PDF calclando el diseño de la entrada digital.
+ * Ajustado según feedback: Más ancho, menos margen superior, QR más pequeño.
  */
 export async function generateTicketsPDF(data: TicketPDFData): Promise<Uint8Array> {
   const pdfDoc = await PDFDocument.create();
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
+  // Colores del sistema
+  const colorBlack = rgb(0, 0, 0);
+  const colorDarkBg = rgb(0.04, 0.04, 0.04);
+  const colorNeonYellow = rgb(0.98, 0.8, 0.08); // #FACC15
+  const colorWhite = rgb(1, 1, 1);
+  const colorGray = rgb(0.5, 0.5, 0.5);
+
+  let logoImage: any = null;
+  if (data.eventLogoUrl) {
+    try {
+      const response = await fetch(data.eventLogoUrl);
+      const imageBytes = await response.arrayBuffer();
+      if (data.eventLogoUrl.toLowerCase().endsWith('.png')) {
+        logoImage = await pdfDoc.embedPng(imageBytes);
+      } else {
+        logoImage = await pdfDoc.embedJpg(imageBytes);
+      }
+    } catch (e) {
+      console.warn("No se pudo cargar la imagen del evento para el PDF:", e);
+    }
+  }
+
   for (let i = 0; i < data.tickets.length; i++) {
     const ticket = data.tickets[i];
-    
-    // Crear una página nueva por cada entrada
-    const page = pdfDoc.addPage([595.28, 841.89]); // Tamaño A4
+    const page = pdfDoc.addPage([595.28, 841.89]);
     const { width, height } = page.getSize();
     
-    // Dibujar un marco/borde
+    page.drawRectangle({ x: 0, y: 0, width, height, color: rgb(0.05, 0.05, 0.05) });
+
+    // AJUSTES DE TAMAÑO Y POSICIÓN
+    const ticketW = 450; // Más ancho como pidió el usuario
+    const ticketH = 780;
+    const ticketX = (width - ticketW) / 2;
+    const ticketY = height - ticketH - 30; // Margen superior mínimo (30px)
+
     page.drawRectangle({
-      x: 50,
-      y: 50,
-      width: width - 100,
-      height: height - 100,
-      borderColor: rgb(0.1, 0.1, 0.1),
-      borderWidth: 2,
+      x: ticketX,
+      y: ticketY,
+      width: ticketW,
+      height: ticketH,
+      color: colorDarkBg,
     });
 
-    // Título del evento
-    page.drawText(data.eventName, {
-      x: 70,
-      y: height - 100,
-      size: 24,
-      font: helveticaBold,
-      color: rgb(0, 0, 0),
-    });
-
-    // Fecha, Apertura y Lugar
-    page.drawText(`${data.eventDate} | Apertura: ${data.eventDoorsOpen} | ${data.eventLocation}`, {
-      x: 70,
-      y: height - 130,
-      size: 14,
-      font: helveticaFont,
-      color: rgb(0.3, 0.3, 0.3),
-    });
-
-    // Información del cliente
-    page.drawText(`Comprador: ${data.customerName}`, {
-      x: 70,
-      y: height - 180,
-      size: 16,
-      font: helveticaFont,
-    });
-
-    page.drawText(`Tipo de Entrada: ${ticket.type}`, {
-      x: 70,
-      y: height - 210,
-      size: 18,
-      font: helveticaBold,
-    });
-    
-    page.drawText(`Precio: ${ticket.price.toFixed(2)} €`, {
-      x: 70,
-      y: height - 240,
-      size: 14,
-      font: helveticaFont,
-    });
-    page.drawText(`Entrada ${i + 1} de ${data.tickets.length}`, {
-      x: 70,
-      y: height - 270,
-      size: 12,
-      font: helveticaFont,
-      color: rgb(0.5, 0.5, 0.5),
-    });
-    
-    // Sección de Pesaje (Si existe)
-    if (data.weighInDate) {
-      page.drawText(`PESAJE ${data.weighInIsFree ? "(ENTRADA LIBRE)" : ""}`, {
-        x: 70,
-        y: height - 310,
-        size: 14,
-        font: helveticaBold,
-        color: rgb(0.8, 0.6, 0), // Un tono dorado/naranja para destacar
+    // 1. POSTER (Cabecera)
+    let currentY = ticketY + ticketH;
+    if (logoImage) {
+      const imgDims = logoImage.scaleToFit(ticketW, 280);
+      page.drawImage(logoImage, {
+        x: ticketX + (ticketW - imgDims.width) / 2,
+        y: currentY - imgDims.height,
+        width: imgDims.width,
+        height: imgDims.height,
       });
-
-      page.drawText(`Fecha: ${data.weighInDate} | Apertura: ${data.weighInDoors || "Consultar"}`, {
-        x: 70,
-        y: height - 335,
-        size: 12,
-        font: helveticaFont,
-        color: rgb(0.2, 0.2, 0.2),
-      });
+      currentY -= imgDims.height;
+    } else {
+      currentY -= 80;
+      page.drawRectangle({ x: ticketX, y: currentY, width: ticketW, height: 80, color: colorBlack });
+      page.drawText(data.eventName.toUpperCase(), { x: ticketX + 20, y: currentY + 30, size: 20, font: helveticaBold, color: colorWhite });
     }
 
-    // Generar la imagen del QR y convertir el DataURL base64 a imagen
+    // 2. BADGE #0000
+    const entryNumStr = `#${String(ticket.entryNumber || 0).padStart(4, '0')}`;
+    page.drawRectangle({ x: ticketX + ticketW - 75, y: ticketY + ticketH - 45, width: 65, height: 35, color: colorBlack, borderColor: colorNeonYellow, borderWidth: 1 });
+    page.drawText(entryNumStr, { x: ticketX + ticketW - 68, y: ticketY + ticketH - 33, size: 16, font: helveticaBold, color: colorNeonYellow });
+
+    // 3. BARRA TIPO ENTRADA
+    currentY -= 45;
+    page.drawRectangle({ x: ticketX, y: currentY, width: ticketW, height: 45, color: colorNeonYellow });
+    page.drawText(ticket.type.toUpperCase(), {
+      x: ticketX + (ticketW - (ticket.type.length * 9)) / 2,
+      y: currentY + 15,
+      size: 18,
+      font: helveticaBold,
+      color: colorBlack,
+    });
+
+    // 4. BARRA PRECIO
+    currentY -= 35;
+    page.drawRectangle({ x: ticketX, y: currentY, width: ticketW, height: 35, color: rgb(0.1, 0.1, 0.1) });
+    const priceStr = `${ticket.price.toFixed(2)} EUR`;
+    page.drawText(priceStr, {
+      x: ticketX + (ticketW - (priceStr.length * 8)) / 2,
+      y: currentY + 10,
+      size: 14,
+      font: helveticaBold,
+      color: colorNeonYellow,
+    });
+
+    // 5. QR CODE (MÁS PEQUEÑO Y CENTRADO)
+    const qrSize = 140; // QR reducido
+    currentY -= (qrSize + 40);
     const qrDataUrl = await generateQRDataURL(ticket.qrCode);
     const qrBase64 = qrDataUrl.split(",")[1];
-    const qrImageBytes = Buffer.from(qrBase64, "base64");
-    const qrImage = await pdfDoc.embedPng(qrImageBytes);
+    const qrImage = await pdfDoc.embedPng(Buffer.from(qrBase64, "base64"));
 
-    // Dibujar el QR en el centro inferior
-    const qrDims = qrImage.scale(0.8);
-    page.drawImage(qrImage, {
-      x: width / 2 - qrDims.width / 2,
-      y: height / 2 - qrDims.height / 2 - 50,
-      width: qrDims.width,
-      height: qrDims.height,
-    });
+    page.drawRectangle({ x: ticketX + (ticketW - qrSize) / 2 - 10, y: currentY - 10, width: qrSize + 20, height: qrSize + 20, color: colorWhite });
+    page.drawImage(qrImage, { x: ticketX + (ticketW - qrSize) / 2, y: currentY, width: qrSize, height: qrSize });
 
-    // Código numérico debajo del QR
-    page.drawText(ticket.qrCode, {
-      x: width / 2 - (ticket.qrCode.length * 3), // centrado aproximado
-      y: height / 2 - qrDims.height / 2 - 70,
-      size: 10,
+    const manualCodeStr = `CÓDIGO MANUAL: ${ticket.qrCode.substring(0, 8).toUpperCase()}`;
+    page.drawText(manualCodeStr, { x: ticketX + (ticketW - (manualCodeStr.length * 6)) / 2, y: currentY - 25, size: 9, font: helveticaBold, color: colorGray });
+
+    // 6. DETALLES
+    currentY -= 50;
+    const dashOptions = { dashArray: [4, 4] };
+    page.drawLine({ start: { x: ticketX + 20, y: currentY }, end: { x: ticketX + ticketW - 20, y: currentY }, thickness: 1, color: colorGray, ...dashOptions });
+
+    // ASISTENTE
+    currentY -= 25;
+    page.drawText("ASISTENTE", { x: ticketX + 20, y: currentY, size: 9, font: helveticaBold, color: colorGray });
+    currentY -= 20;
+    page.drawText(data.customerName.toUpperCase(), { x: ticketX + 20, y: currentY, size: 16, font: helveticaBold, color: colorWhite });
+
+    currentY -= 20;
+    page.drawLine({ start: { x: ticketX + 20, y: currentY }, end: { x: ticketX + ticketW - 20, y: currentY }, thickness: 1, color: colorGray, ...dashOptions });
+
+    // FECHA / PUERTAS
+    currentY -= 25;
+    page.drawText("FECHA", { x: ticketX + 20, y: currentY, size: 9, font: helveticaBold, color: colorGray });
+    page.drawText("PUERTAS", { x: ticketX + 200, y: currentY, size: 9, font: helveticaBold, color: colorGray });
+    currentY -= 15;
+    page.drawText(data.eventDate.toUpperCase(), { x: ticketX + 20, y: currentY, size: 12, font: helveticaBold, color: colorWhite });
+    page.drawText(data.eventDoorsOpen, { x: ticketX + 200, y: currentY, size: 12, font: helveticaBold, color: colorWhite });
+
+    // LUGAR
+    currentY -= 25;
+    page.drawText("LUGAR", { x: ticketX + 20, y: currentY, size: 9, font: helveticaBold, color: colorGray });
+    currentY -= 15;
+    page.drawText(data.eventLocation.toUpperCase(), { x: ticketX + 20, y: currentY, size: 12, font: helveticaBold, color: colorWhite });
+
+    // PESAJE
+    if (data.weighInDate) {
+      currentY -= 20;
+      page.drawLine({ start: { x: ticketX + 20, y: currentY }, end: { x: ticketX + ticketW - 20, y: currentY }, thickness: 1, color: colorGray, ...dashOptions });
+      currentY -= 20;
+      page.drawText(`PESAJE ${data.weighInIsFree ? "(ENTRADA LIBRE)" : ""}`, { x: ticketX + 20, y: currentY, size: 11, font: helveticaBold, color: colorNeonYellow });
+      currentY -= 20;
+      page.drawText("FECHA", { x: ticketX + 20, y: currentY, size: 8, font: helveticaBold, color: colorGray });
+      page.drawText("PUERTAS", { x: ticketX + 200, y: currentY, size: 8, font: helveticaBold, color: colorGray });
+      currentY -= 12;
+      page.drawText(data.weighInDate.toUpperCase(), { x: ticketX + 20, y: currentY, size: 10, font: helveticaBold, color: colorWhite });
+      page.drawText(data.weighInDoors || "11:00 AM", { x: ticketX + 200, y: currentY, size: 10, font: helveticaBold, color: colorWhite });
+    }
+
+    // FOOTER
+    page.drawText("Entrada personal e intransferible. Prohibida la reventa.", {
+      x: ticketX + 20,
+      y: ticketY + 15,
+      size: 7,
       font: helveticaFont,
-      color: rgb(0.5, 0.5, 0.5),
-    });
-
-    // Instrucciones
-    page.drawText("Muestra este código QR en la puerta desde tu móvil o impreso.", {
-      x: 70,
-      y: 100,
-      size: 12,
-      font: helveticaFont,
+      color: colorGray,
     });
   }
 

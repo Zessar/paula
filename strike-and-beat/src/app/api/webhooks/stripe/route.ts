@@ -152,42 +152,15 @@ export async function POST(req: Request) {
         } else {
           console.log(`${ticketEntries.length} entrada(s) QR generada(s) correctamente.`);
           
-          // Generar PDF y Enviar Email
+          // Enviar Email
           try {
-            console.log("Generando PDF de las entradas...");
-            
-            // Traemos el nombre del evento
             const eventInfo = await getEventInfo();
-            
-            // Para el PDF necesitamos los nombres de los tickets, que están en el cartData
-            const pdfTickets = ticketEntries.map(entry => {
-              const cartItem = cartData.find((item: any) => item.id === entry.ticket_id);
-              return {
-                id: entry.id,
-                type: cartItem ? cartItem.name : "Entrada",
-                price: entry.ticket_price,
-                qrCode: entry.qr_code,
-              };
-            });
-
-            const pdfBuffer = await generateTicketsPDF({
-              customerName: customerName,
-              eventName: eventInfo.title || "Strike & Beat",
-              eventDate: eventInfo.date || "Por confirmar",
-              eventDoorsOpen: eventInfo.doorsOpen || "Ver cartel",
-              eventLocation: eventInfo.locationName || "Recinto",
-              weighInDate: eventInfo.weighInDate,
-              weighInDoors: eventInfo.weighInDoors,
-              weighInIsFree: eventInfo.weighInIsFree,
-              tickets: pdfTickets,
-            });
-
             console.log("Enviando email con entradas a", customerEmail);
             await sendTicketsEmail({
               to: customerEmail,
               customerName: customerName,
               eventName: eventInfo.title || "Strike & Beat",
-              pdfBuffer: pdfBuffer,
+              ticketTokens: ticketEntries.map(e => e.qr_code),
             });
             console.log("Email enviado exitosamente.");
             

@@ -42,7 +42,7 @@ export default async function CombatesPage() {
                     <div className="w-1/2 overflow-hidden border-r border-outline-variant/30 bg-surface-container-highest flex items-center justify-center">
                       {fight.imageA ? (
                         <img
-                          className="w-full h-full object-cover filter grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover filter grayscale contrast-125 group-hover:scale-105 transition-transform duration-500"
                           alt={fight.nameA}
                           src={fight.imageA}
                         />
@@ -53,7 +53,7 @@ export default async function CombatesPage() {
                     <div className="w-1/2 overflow-hidden bg-surface-container-highest flex items-center justify-center">
                       {fight.imageB ? (
                         <img
-                          className="w-full h-full object-cover filter grayscale contrast-125 brightness-75 group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover filter grayscale contrast-125 group-hover:scale-105 transition-transform duration-500"
                           alt={fight.nameB}
                           src={fight.imageB}
                         />
@@ -62,7 +62,7 @@ export default async function CombatesPage() {
                       )}
                     </div>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+                  {/* Removed gradient overlay to maximize image brightness */}
                   <div className={`absolute bottom-md ${index % 2 === 0 ? "left-md" : "right-md"}`}>
                     <span className={`${accentColor} ${isEven ? "text-surface" : "text-surface"} font-label-bold px-md py-xs uppercase tracking-widest`}>
                       {fight.badgeText || (fight.isFeatured ? "Main Event" : "Under Card")}

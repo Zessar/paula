@@ -24,13 +24,14 @@ export default async function ContactoPage() {
         {eventData.contactHeroImage && (
           <img
             alt="Contact Hero"
-            className="absolute inset-0 md:inset-y-0 md:left-auto md:right-0 w-full md:w-1/2 h-full object-cover object-top grayscale opacity-60"
+            className="absolute top-[-10%] md:top-[-15%] md:inset-y-auto md:left-auto md:right-0 w-full md:w-1/2 h-[120%] object-cover grayscale opacity-60"
+            style={{ objectPosition: 'center top' }}
             src={eventData.contactHeroImage}
           />
         )}
         {/* Background Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent md:bg-gradient-to-r md:from-surface md:via-surface md:via-[55%] md:to-transparent"></div>
-        
+
         <div className="relative z-10 px-gutter w-full max-w-container-max mx-auto">
           <div className="bg-neon-yellow text-surface inline-block px-md py-xs font-headline-md text-[20px] md:text-[24px] uppercase mb-sm tracking-widest">
             Estamos Aquí
@@ -57,14 +58,14 @@ export default async function ContactoPage() {
       {/* ============================================================ */}
       <div className="max-w-container-max mx-auto px-gutter py-xl">
         <div className="grid lg:grid-cols-12 gap-xl">
-          
+
           {/* Informacion de contacto (4 cols) */}
           <div className="lg:col-span-5 space-y-lg">
             <div>
               <h2 className="font-display-xl text-[44px] md:text-headline-lg text-white uppercase mb-md leading-[1] md:leading-[1.1]">
                 {eventData.contactSubtitle ? (
                   <>
-                    {eventData.contactSubtitle.split(' ').slice(0, -2).join(' ')} <br /> 
+                    {eventData.contactSubtitle.split(' ').slice(0, -2).join(' ')} <br />
                     <span className="text-neon-yellow">{eventData.contactSubtitle.split(' ').slice(-2).join(' ')}</span>
                   </>
                 ) : (
@@ -77,34 +78,34 @@ export default async function ContactoPage() {
             </div>
 
             <div className="grid gap-md">
-              <CopyContactCard 
-                type="email" 
-                icon="mail" 
-                label="Email (Clic para copiar)" 
-                value={eventData.contactEmail || "contacto@strikeandbeat.com"} 
+              <CopyContactCard
+                type="email"
+                icon="mail"
+                label="Email (Clic para copiar)"
+                value={eventData.contactEmail || "contacto@strikeandbeat.com"}
               />
 
               {eventData.contactPhone && (
-                <CopyContactCard 
-                  type="phone" 
-                  icon="phone" 
-                  label="Teléfono (Clic para copiar)" 
-                  value={eventData.contactPhone} 
+                <CopyContactCard
+                  type="phone"
+                  icon="phone"
+                  label="Teléfono (Clic para copiar)"
+                  value={eventData.contactPhone}
                 />
               )}
 
-              <CopyContactCard 
-                type="location" 
-                icon="map" 
-                label="Localización" 
-                value={eventData.locationName || "Arroyo Vallejo, Pabellón"} 
+              <CopyContactCard
+                type="location"
+                icon="map"
+                label="Localización"
+                value={eventData.locationName || "Arroyo Vallejo, Pabellón"}
               />
 
-              <CopyContactCard 
-                type="hours" 
-                icon="clock" 
-                label="Atención" 
-                value={eventData.contactHours || "L-V: 10:00 - 18:00"} 
+              <CopyContactCard
+                type="hours"
+                icon="clock"
+                label="Atención"
+                value={eventData.contactHours || "L-V: 10:00 - 18:00"}
               />
             </div>
 
@@ -122,21 +123,21 @@ export default async function ContactoPage() {
           {/* Formulario (7 cols) */}
           <div className="lg:col-span-7 bg-surface-variant/5 p-lg md:p-xl border border-outline-variant relative">
             <div className="absolute top-0 right-0 w-24 h-24 border-t-4 border-r-4 border-neon-yellow opacity-20"></div>
-            
+
             <form className="space-y-lg">
               <div className="grid md:grid-cols-2 gap-lg">
                 <div className="flex flex-col gap-xs">
                   <label className="font-label-bold text-on-surface-variant uppercase text-xs">Tu Nombre</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     placeholder="EJ: JUAN PÉREZ"
                     className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-md uppercase font-body-md"
                   />
                 </div>
                 <div className="flex flex-col gap-xs">
                   <label className="font-label-bold text-on-surface-variant uppercase text-xs">Tu Email</label>
-                  <input 
-                    type="email" 
+                  <input
+                    type="email"
                     placeholder="TU@EMAIL.COM"
                     className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-md uppercase font-body-md"
                   />
@@ -145,8 +146,8 @@ export default async function ContactoPage() {
 
               <div className="flex flex-col gap-xs">
                 <label className="font-label-bold text-on-surface-variant uppercase text-xs">Asunto</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   placeholder="¿EN QUÉ PODEMOS AYUDARTE?"
                   className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-md uppercase font-body-md"
                 />
@@ -154,7 +155,7 @@ export default async function ContactoPage() {
 
               <div className="flex flex-col gap-xs">
                 <label className="font-label-bold text-on-surface-variant uppercase text-xs">Mensaje</label>
-                <textarea 
+                <textarea
                   rows={6}
                   placeholder="ESCRIBE TU MENSAJE AQUÍ..."
                   className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-md uppercase font-body-md resize-none"
@@ -178,8 +179,8 @@ export default async function ContactoPage() {
 
         {/* Footer Nav Links */}
         <nav className="mt-xl pt-lg border-t border-outline-variant flex justify-center items-center">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="group flex items-center gap-sm px-xl py-md border-2 border-neon-yellow text-neon-yellow hover:bg-neon-yellow hover:text-surface transition-all font-label-bold text-xs uppercase tracking-widest"
           >
             <span className="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>

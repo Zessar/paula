@@ -150,7 +150,7 @@ export function AdminSettingsClient({ initialEventInfo }: { initialEventInfo: an
             <div className="space-y-xl animate-fade-in">
               {/* INFORMACIÓN PRINCIPAL */}
               <div className="bg-surface-container border-2 border-outline-variant p-lg space-y-md">
-                <h3 className="font-headline-md text-headline-sm uppercase text-neon-yellow border-b border-outline-variant pb-xs">Información Principal</h3>
+                <h3 className="font-headline-md text-2xl uppercase text-neon-yellow border-b border-outline-variant pb-md mb-md">Información Principal</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-lg">
                   <div className="flex flex-col gap-xs md:col-span-2">
                     <label className="font-label-bold text-xs uppercase text-outline">Título del Evento</label>
@@ -362,7 +362,7 @@ export function AdminSettingsClient({ initialEventInfo }: { initialEventInfo: an
 
               {/* ACERCA DE */}
               <div className="bg-surface-container border-2 border-outline-variant p-lg space-y-md">
-                <h3 className="font-headline-md text-headline-sm uppercase text-neon-yellow border-b border-outline-variant pb-xs">Sección "Acerca De"</h3>
+                <h3 className="font-headline-md text-2xl uppercase text-neon-yellow border-b border-outline-variant pb-md mb-md">Sección "Acerca De"</h3>
                 <div className="grid grid-cols-1 gap-lg">
                   <div className="flex flex-col gap-xs">
                     <label className="font-label-bold text-xs uppercase text-outline">Título</label>
@@ -385,7 +385,7 @@ export function AdminSettingsClient({ initialEventInfo }: { initialEventInfo: an
             <div className="space-y-xl animate-fade-in">
               <div className="bg-surface-container border-2 border-outline-variant p-lg space-y-md">
                 <div className="flex justify-between items-center border-b border-outline-variant pb-xs">
-                  <h3 className="font-headline-md text-headline-sm uppercase text-neon-yellow">Apariencia y Theming</h3>
+                  <h3 className="font-headline-md text-2xl uppercase text-neon-yellow">Apariencia y Theming</h3>
                 </div>
                 <p className="text-on-surface-variant text-sm mb-lg">
                   Personaliza la paleta de colores y el estilo de los botones dinámicamente.
