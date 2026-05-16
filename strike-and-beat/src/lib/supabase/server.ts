@@ -28,6 +28,22 @@ export async function createServerSupabaseClient() {
   );
 }
 
+// Cliente para peticiones públicas en SSG (sin usar cookies() de next/headers)
+export function createPublicSupabaseClient() {
+  return createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return [];
+        },
+        setAll() {}
+      }
+    }
+  );
+}
+
 export async function assertAdmin() {
   const supabase = await createServerSupabaseClient();
   const { data: { user }, error } = await supabase.auth.getUser();

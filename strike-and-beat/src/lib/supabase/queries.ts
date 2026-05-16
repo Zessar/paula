@@ -4,7 +4,7 @@
  * Incluye fallback a mockData si la conexion falla.
  */
 
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createServerSupabaseClient, createPublicSupabaseClient } from "@/lib/supabase/server";
 import {
   eventData as mockEventData,
   fighters as mockFighters,
@@ -26,7 +26,7 @@ import {
 
 export async function getEventInfo(): Promise<EventInfo> {
   try {
-    const supabase: any = await createServerSupabaseClient();
+    const supabase: any = createPublicSupabaseClient();
     const { data, error } = await supabase
       .from("event_info")
       .select("*")
@@ -100,7 +100,7 @@ export async function getEventInfo(): Promise<EventInfo> {
 
 export async function getFights(): Promise<Fighter[]> {
   try {
-    const supabase: any = await createServerSupabaseClient();
+    const supabase: any = createPublicSupabaseClient();
     const { data, error } = await supabase
       .from("fights")
       .select("*")
@@ -138,7 +138,7 @@ export async function getFights(): Promise<Fighter[]> {
 
 export async function getFightBySlug(slug: string): Promise<Fighter | null> {
   try {
-    const supabase: any = await createServerSupabaseClient();
+    const supabase: any = createPublicSupabaseClient();
     const { data, error } = await supabase
       .from("fights")
       .select("*")
@@ -179,7 +179,7 @@ export async function getFightBySlug(slug: string): Promise<Fighter | null> {
 
 export async function getArtists(): Promise<Artist[]> {
   try {
-    const supabase: any = await createServerSupabaseClient();
+    const supabase: any = createPublicSupabaseClient();
     const { data, error } = await supabase
       .from("artists")
       .select("*")
@@ -214,7 +214,7 @@ export async function getArtists(): Promise<Artist[]> {
 
 export async function getArtistBySlug(slug: string): Promise<Artist | null> {
   try {
-    const supabase: any = await createServerSupabaseClient();
+    const supabase: any = createPublicSupabaseClient();
     const { data, error } = await supabase
       .from("artists")
       .select("*")
@@ -253,7 +253,7 @@ export async function getArtistBySlug(slug: string): Promise<Artist | null> {
 
 export async function getTickets(): Promise<Ticket[]> {
   try {
-    const supabase: any = await createServerSupabaseClient();
+    const supabase: any = createPublicSupabaseClient();
     // Traemos los tickets y sumamos las cantidades de order_items relacionadas
     const { data, error } = await supabase
       .from("tickets")
@@ -300,7 +300,7 @@ export async function getTickets(): Promise<Ticket[]> {
 
 export async function getSponsors(): Promise<Sponsor[]> {
   try {
-    const supabase: any = await createServerSupabaseClient();
+    const supabase: any = createPublicSupabaseClient();
     const { data, error } = await supabase
       .from("sponsors")
       .select("*")
@@ -329,7 +329,7 @@ export async function getSponsors(): Promise<Sponsor[]> {
 
 export async function getFaqs(): Promise<FAQ[]> {
   try {
-    const supabase: any = await createServerSupabaseClient();
+    const supabase: any = createPublicSupabaseClient();
     const { data, error } = await supabase
       .from("faqs")
       .select("*")
