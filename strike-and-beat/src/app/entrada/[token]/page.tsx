@@ -392,8 +392,8 @@ export default async function EntradaPage({
                   <span className="info-value">{weighInDate}</span>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Hora</span>
-                  <span className="info-value">{weighInTime || weighInDoors || "Consultar"}</span>
+                  <span className="info-label">Puertas</span>
+                  <span className="info-value">{weighInDoors || weighInTime || "Consultar"}</span>
                 </div>
               </div>
             </>

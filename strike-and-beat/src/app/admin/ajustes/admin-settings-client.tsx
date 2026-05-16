@@ -272,8 +272,12 @@ export function AdminSettingsClient({ initialEventInfo }: { initialEventInfo: an
                     <input {...register("weigh_in_date")} className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md" />
                   </div>
                   <div className="flex flex-col gap-xs">
-                    <label className="font-label-bold text-xs uppercase text-outline">Apertura</label>
+                    <label className="font-label-bold text-xs uppercase text-outline">Apertura Puertas Pesaje</label>
                     <input {...register("weigh_in_doors")} className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md" />
+                  </div>
+                  <div className="flex flex-col gap-xs">
+                    <label className="font-label-bold text-xs uppercase text-outline">Hora de Pesaje</label>
+                    <input {...register("weigh_in_time")} className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md" />
                   </div>
                   <div className="flex items-center gap-sm mt-6">
                     <input type="checkbox" id="weigh_in_is_free" {...register("weigh_in_is_free")} className="w-5 h-5 accent-neon-yellow" />
@@ -329,6 +333,29 @@ export function AdminSettingsClient({ initialEventInfo }: { initialEventInfo: an
                   <div className="flex flex-col gap-xs md:col-span-2">
                     <label className="font-label-bold text-xs uppercase text-outline">Texto Asociación</label>
                     <textarea {...register("contact_association_text")} rows={4} className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md resize-y" />
+                  </div>
+                </div>
+              </div>
+
+              {/* TÍTULOS DE SECCIONES (ARTISTAS Y COMBATES) */}
+              <div className="bg-surface-container border-2 border-outline-variant p-lg space-y-md">
+                <h3 className="font-headline-md text-headline-sm uppercase text-neon-yellow border-b border-outline-variant pb-xs">Títulos de Secciones</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-lg">
+                  <div className="flex flex-col gap-xs">
+                    <label className="font-label-bold text-xs uppercase text-outline">Título de Artistas</label>
+                    <input {...register("artists_title")} className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md" />
+                  </div>
+                  <div className="flex flex-col gap-xs">
+                    <label className="font-label-bold text-xs uppercase text-outline">Descripción de Artistas</label>
+                    <textarea {...register("artists_description")} rows={2} className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md resize-y" />
+                  </div>
+                  <div className="flex flex-col gap-xs">
+                    <label className="font-label-bold text-xs uppercase text-outline">Título de Combates</label>
+                    <input {...register("fights_title")} className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md" />
+                  </div>
+                  <div className="flex flex-col gap-xs">
+                    <label className="font-label-bold text-xs uppercase text-outline">Descripción de Combates</label>
+                    <textarea {...register("fights_description")} rows={2} className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md resize-y" />
                   </div>
                 </div>
               </div>
