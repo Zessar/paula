@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { getEventInfo } from "@/lib/supabase/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function InfoPage() {
   const eventData = await getEventInfo();
 

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { getArtists, getEventInfo } from "@/lib/supabase/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function ArtistasPage() {
   const [artists, eventInfo] = await Promise.all([
     getArtists(),

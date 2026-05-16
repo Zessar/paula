@@ -7,6 +7,8 @@ import {
   getSalesStats
 } from "@/lib/supabase/queries"
 
+export const dynamic = "force-dynamic";
+
 /* ------------------------------------------------------------------ */
 /*  COMPONENTE STAT CARD                                               */
 /* ------------------------------------------------------------------ */

@@ -48,6 +48,9 @@ export interface EventInfo {
   marqueeSpeed?: number;
   contactHeroImage?: string;
   ticketsHeroImage?: string;
+  cardFightsText?: string;
+  cardArtistsText?: string;
+  cardBarsText?: string;
 }
 
 export interface Fighter {

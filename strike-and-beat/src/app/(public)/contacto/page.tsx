@@ -4,6 +4,8 @@ import { Mail, MapPin, Clock, Send, Phone } from "lucide-react"
 import { getEventInfo } from "@/lib/supabase/queries"
 import { CopyContactCard } from "@/components/ui/copy-contact-card"
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Contacto | Strike & Beat",
   description: "Contacta con el equipo de Strike & Beat para cualquier consulta.",

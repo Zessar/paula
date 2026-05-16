@@ -25,7 +25,7 @@ export default function AdminFaqClient({ initialFaqs }: AdminFaqClientProps) {
     reset,
     formState: { errors },
   } = useForm<FAQInput>({
-    resolver: zodResolver(FAQSchema),
+    resolver: zodResolver(FAQSchema) as any,
   });
 
   const openCreate = () => {

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { getFights, getEventInfo } from "@/lib/supabase/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function CombatesPage() {
   const [fights, eventInfo] = await Promise.all([
     getFights(),

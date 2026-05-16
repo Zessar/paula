@@ -7,6 +7,8 @@ import { FAQ } from "@/components/sections/faq";
 import { Location } from "@/components/sections/location";
 import { getFaqs } from "@/lib/supabase/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const faqs = await getFaqs();
 

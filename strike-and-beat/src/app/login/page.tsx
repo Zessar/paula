@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { LoginForm } from "./login-form";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Área Restringida | Strike & Beat",
   description: "Acceso exclusivo para administradores.",
