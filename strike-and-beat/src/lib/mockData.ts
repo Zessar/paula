@@ -24,6 +24,7 @@ export interface EventInfo {
   totalBars?: number;
   hasBars?: boolean;
   breakTimes?: string;
+  totalBreaks?: number;
   firstFightTime?: string;
   infoImage?: string;
   locationLogisticsTitle?: string;
@@ -38,6 +39,15 @@ export interface EventInfo {
   contactHours?: string;
   contactAssociationTitle?: string;
   contactAssociationText?: string;
+  artistsTitle?: string;
+  artistsDescription?: string;
+  fightsTitle?: string;
+  fightsDescription?: string;
+  themePrimaryColor?: string;
+  themeNeonColor?: string;
+  marqueeSpeed?: number;
+  contactHeroImage?: string;
+  ticketsHeroImage?: string;
 }
 
 export interface Fighter {
@@ -52,6 +62,7 @@ export interface Fighter {
   rounds: string;
   rules: string;
   isFeatured: boolean;
+  badgeText?: string;
   descriptionA?: string;
   descriptionB?: string;
   videoUrl?: string;
@@ -66,7 +77,9 @@ export interface Artist {
   profileLink: string;
   instagramUrl?: string;
   spotifyUrl?: string;
+  spotifyEmbedUrl?: string;
   youtubeUrl?: string;
+  subtitle?: string;
   description?: string;
   videoUrl?: string;
   heroImage?: string;
@@ -81,6 +94,8 @@ export interface Ticket {
   price: number;
   stock: number | null;
   managementFees: number;
+  soldCount?: number;
+  totalCapacity?: number | null;
 }
 
 export interface Sponsor {
@@ -94,6 +109,7 @@ export interface FAQ {
   id: string;
   question: string;
   answer: string;
+  sort_order?: number;
 }
 
 export const eventData: EventInfo = {
@@ -107,6 +123,16 @@ export const eventData: EventInfo = {
   aboutSecondaryText: "Unimos la energía del ring con la potencia del escenario urbano para crear una noche de pura resistencia y solidaridad.",
   aboutImage: "https://lh3.googleusercontent.com/aida-public/AB6AXuBfE-HPZlwJMUKaBeFgU-FM3Q4pwTNO2eMNKcpXLDIObs1ELhtXyeILqNg0qaeseqpbWS6bJ1XFfva585kgsz4hs3MzoASjwYw2PIez7rUgs16bizskOVhCOmJT5Q4n_eqJeNH_CcAc2fjeRwpCI3_qsmYVY-SNGJl_jHUT9S1CKKWtJXHPgKnYd2u6FHo8A7xatMhnjITNeSJaTlvzrML-5AsnR4EKbiupKkr4LgnTBSEoPKGTto1J-kKkaX4152zEskKHVdDp1b8",
   doorsOpen: "18:00 hrs",
+  locationLogistics: "AFORO: 2,500 ESPECTADORES\nCOMIDA Y BEBIDA: 2 BARRAS COMPLETAS + SNACKS\nINSTALACIONES: ASEOS + PUESTOS DE MERCH\nPARKING: APARCAMIENTO PÚBLICO ADYACENTE",
+  weighInDate: "14 JUNIO 2024",
+  weighInDoors: "10:00 AM",
+  weighInTime: "11:00 AM",
+  weighInIsFree: true,
+  totalFights: 10,
+  totalArtists: 3,
+  hasBars: true,
+  breakTimes: "02",
+  firstFightTime: "17:35H",
 };
 
 export const fighters: Fighter[] = [
@@ -121,7 +147,7 @@ export const fighters: Fighter[] = [
     category: "PESO PESADO",
     rounds: "5 ROUNDS",
     rules: "BOXEO PRO",
-    isFeatured: true,
+    isFeatured: true
   },
   {
     id: "fight-2",
@@ -134,8 +160,8 @@ export const fighters: Fighter[] = [
     category: "PESO PLUMA",
     rounds: "3 ROUNDS",
     rules: "BOXEO AMATEUR",
-    isFeatured: true,
-  },
+    isFeatured: true
+  }
 ];
 
 export const artists: Artist[] = [
@@ -144,22 +170,22 @@ export const artists: Artist[] = [
     name: "MC VOLTAJE",
     genre: "RAP / HARDCORE",
     image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD3CW79rAfa6ah19NmGAui9oCk6_aK5Y5sDgge4Ew5i-5WWnm4f1ayKBOQWTY6ahFX0iWwozySk8YNEl_O1JFFLJiJalkHaOu6V6iwhDHnamfxQsEoJnsiB4vkGPSzgSYWNMmBswXCRJAmRp32othrThMgYh0mjU6o5xmcvwXVEOQi3mGsGxtd8g2Oosicbyet5-9rMx8XwlAnaT3zTruNJo3wHU2hP0E4Avp_iiJi8JmkT6wyBAz8w6AAG7R-476up7VgEXz9ab2U",
-    profileLink: "/artistas",
+    profileLink: "/artistas"
   },
   {
     id: "artist-2",
     name: "K-OS URBANO",
     genre: "DRILL / TRAP",
     image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC25J-6cQCBtUtVembf3DrSldvCxk7vo-7221amGSPWZFkGk81hVfgDOXsbMrqStJwLWW9c3wmBh6gENOKCM7FloD5M0LD6n1v286x3hdU-iqQUUB-p8n5Px0TOkMKCcGoSPzg_-ykpOvpchYvA7kCSFqoH-cQZqnCKrOhtK2_xk0scIVPEqk1oVK6xsqv42hDVz7fyZDBw7lAMeBKoLgMTu4dzybHXEoR8RZvkODE6qAjzJ1XV8SXqIYqf15XLP7k22YxeMastDpQ",
-    profileLink: "/artistas",
+    profileLink: "/artistas"
   },
   {
     id: "artist-3",
     name: "NEBULOSA",
     genre: "R&B / SOUL",
     image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDed1o9V-Vh_arOZ2ByoC8Xv1-uzIe4KAPQwN9gUFmWidwogSF_3750X9ilEFpuZGYs5e7KH6EYq3nhcLtoV0WFUHJwzlwprh3W-Wf9MqNFG8Bo_q3Ne3uQWQ-OprcKBUWDnPQSSKuVZTLNTnMqw4w0OjQrAATPt4oxI2kOm-xfz_k24ul4CuU5NulYqyixm1OJuIYsmWCAbTM1Feqko1kFykRGaFDrWo2EZdLEwuRBOY91Cw5bb-k9_rP8wPldNW2tOXsuayzIKqk",
-    profileLink: "/artistas",
-  },
+    profileLink: "/artistas"
+  }
 ];
 
 export const tickets: Ticket[] = [
@@ -170,7 +196,7 @@ export const tickets: Ticket[] = [
     description: "Acceso directo a pie de ring. Vive la vibracion de cada golpe.",
     price: 15,
     stock: null,
-    managementFees: 2.5,
+    managementFees: 2.5
   },
   {
     id: "ticket-grada",
@@ -179,15 +205,15 @@ export const tickets: Ticket[] = [
     description: "Vision panoramica del octagono y el escenario principal.",
     price: 20,
     stock: 233,
-    managementFees: 2.5,
-  },
+    managementFees: 2.5
+  }
 ];
 
 export const sponsors: Sponsor[] = [
   { id: "sp-1", name: "SPONSOR_01", opacity: 50 },
   { id: "sp-2", name: "SPONSOR_02", opacity: 50 },
   { id: "sp-3", name: "SPONSOR_03", opacity: 50 },
-  { id: "sp-4", name: "SPONSOR_04", opacity: 50 },
+  { id: "sp-4", name: "SPONSOR_04", opacity: 50 }
 ];
 
 export const faqs: FAQ[] = [
@@ -195,15 +221,18 @@ export const faqs: FAQ[] = [
     id: "faq-1",
     question: "¿A qué hora abren las puertas?",
     answer: "Las puertas abren a las 18:00 hrs. Te recomendamos llegar temprano para evitar filas y disfrutar del pre-show.",
+    sort_order: 1
   },
   {
     id: "faq-2",
     question: "¿Hay límite de edad?",
     answer: "El evento es apto para mayores de 18 años. Se requerirá identificación oficial con fotografía en la entrada.",
+    sort_order: 2
   },
   {
     id: "faq-3",
     question: "¿Qué incluye la entrada VIP?",
     answer: "La entrada VIP incluye acceso preferencial sin filas, zona exclusiva cerca del octágono/escenario, barra libre premium y acceso al after-party oficial.",
-  },
+    sort_order: 3
+  }
 ];

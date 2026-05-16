@@ -42,13 +42,13 @@
   --color-surface-container-low: #1c1b20;
   --color-inverse-surface: #e6e1e9;
   --color-secondary: #cdc0e8;
-  --color-primary: #cfbdff;
+  --color-primary: var(--primary-color, #cfbdff);
   --color-on-tertiary: #3e2e00;
   --color-on-primary-fixed-variant: #4e378a;
   --color-on-secondary-container: #beb3da;
   --color-on-surface: #e6e1e9;
   --color-tertiary-fixed-dim: #e7c365;
-  --color-neon-yellow: #facc15;
+  --color-neon-yellow: var(--neon-color, #facc15);
 
   --spacing-gutter: 20px;
   --spacing-xs: 4px;
@@ -150,7 +150,7 @@ body {
 }
 
 .neon-accent {
-  background-color: #facc15;
+  background-color: var(--color-neon-yellow);
   color: #0a0a0a;
 }
 
@@ -170,9 +170,42 @@ body {
 }
 
 @utility animate-marquee {
-  animation: marquee 50s linear infinite;
+  animation: marquee var(--marquee-speed, 50s) linear infinite;
 }
 
 * {
   border-radius: 0px !important;
+}
+
+/* Prose para biografias de artistas con HTML */
+.prose-artist strong {
+  color: var(--color-on-surface);
+  font-weight: 700;
+}
+
+.prose-artist em {
+  color: var(--color-on-surface);
+  font-style: italic;
+}
+
+.prose-artist .text-primary {
+  color: var(--color-primary);
+}
+
+.prose-artist .text-neon-yellow {
+  color: var(--color-neon-yellow);
+}
+
+@utility text-display-sm {
+  font-size: 48px;
+  line-height: 90%;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+@utility text-display-md {
+  font-size: 72px;
+  line-height: 90%;
+  letter-spacing: 0.02em;
+  font-weight: 400;
 }

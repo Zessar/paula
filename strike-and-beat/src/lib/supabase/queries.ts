@@ -59,6 +59,7 @@ export async function getEventInfo(): Promise<EventInfo> {
       totalBars: data.total_bars,
       hasBars: data.has_bars,
       breakTimes: data.break_times,
+      totalBreaks: data.total_breaks || 0,
       firstFightTime: data.first_fight_time,
       infoImage: data.info_image || mockEventData.infoImage || "",
       locationLogisticsTitle: data.location_logistics_title || "Logística del recinto",
@@ -74,6 +75,18 @@ export async function getEventInfo(): Promise<EventInfo> {
       contactHours: data.contact_hours || "L-V: 10:00 - 18:00",
       contactAssociationTitle: data.contact_association_title || "Caminando Juntos",
       contactAssociationText: data.contact_association_text,
+      artistsTitle: data.artists_title,
+      artistsDescription: data.artists_description,
+      fightsTitle: data.fights_title || "Combates",
+      fightsDescription: data.fights_description || "",
+      cardFightsText: data.card_fights_text || "",
+      cardArtistsText: data.card_artists_text || "",
+      cardBarsText: data.card_bars_text || "",
+      themePrimaryColor: data.theme_primary_color || "#cfbdff",
+      themeNeonColor: data.theme_neon_color || "#facc15",
+      marqueeSpeed: data.marquee_speed ?? 50,
+      contactHeroImage: data.contact_hero_image || "",
+      ticketsHeroImage: data.tickets_hero_image || mockEventData.ticketsHeroImage,
     };
   } catch (err) {
     console.warn("[Supabase] Error de conexion, fallback a mockData:", err);
@@ -91,6 +104,7 @@ export async function getFights(): Promise<Fighter[]> {
     const { data, error } = await supabase
       .from("fights")
       .select("*")
+      .order("is_featured", { ascending: false })
       .order("sort_order", { ascending: true });
 
     if (error || !data || data.length === 0) {
@@ -110,6 +124,7 @@ export async function getFights(): Promise<Fighter[]> {
       rounds: f.rounds,
       rules: f.rules,
       isFeatured: f.is_featured,
+      badgeText: f.badge_text || "",
       descriptionA: f.description_a || "",
       descriptionB: f.description_b || "",
       videoUrl: f.video_url || "",
@@ -146,6 +161,7 @@ export async function getFightBySlug(slug: string): Promise<Fighter | null> {
       rounds: data.rounds,
       rules: data.rules,
       isFeatured: data.is_featured,
+      badgeText: data.badge_text || "",
       descriptionA: data.description_a || "",
       descriptionB: data.description_b || "",
       videoUrl: data.video_url || "",
@@ -182,7 +198,9 @@ export async function getArtists(): Promise<Artist[]> {
       profileLink: a.slug ? `/artistas/${a.slug}` : (a.profile_link || "/artistas"),
       instagramUrl: a.instagram_url,
       spotifyUrl: a.spotify_url,
+      spotifyEmbedUrl: a.spotify_embed_url || "",
       youtubeUrl: a.youtube_url,
+      subtitle: a.subtitle || "",
       description: a.description || "",
       videoUrl: a.video_url || "",
       heroImage: a.hero_image || "",
@@ -215,7 +233,9 @@ export async function getArtistBySlug(slug: string): Promise<Artist | null> {
       profileLink: data.slug ? `/artistas/${data.slug}` : (data.profile_link || "/artistas"),
       instagramUrl: data.instagram_url,
       spotifyUrl: data.spotify_url,
+      spotifyEmbedUrl: data.spotify_embed_url || "",
       youtubeUrl: data.youtube_url,
+      subtitle: data.subtitle || "",
       description: data.description || "",
       videoUrl: data.video_url || "",
       heroImage: data.hero_image || "",
@@ -234,9 +254,15 @@ export async function getArtistBySlug(slug: string): Promise<Artist | null> {
 export async function getTickets(): Promise<Ticket[]> {
   try {
     const supabase: any = await createServerSupabaseClient();
+    // Traemos los tickets y sumamos las cantidades de order_items relacionadas
     const { data, error } = await supabase
       .from("tickets")
-      .select("*")
+      .select(`
+        *,
+        order_items (
+          quantity
+        )
+      `)
       .order("price", { ascending: true });
 
     if (error || !data || data.length === 0) {
@@ -244,15 +270,24 @@ export async function getTickets(): Promise<Ticket[]> {
       return mockTickets;
     }
 
-    return data.map((t: any) => ({
-      id: t.id,
-      priceId: t.stripe_price_id || "price_placeholder",
-      name: t.name,
-      description: t.description || "",
-      price: Number(t.price),
-      stock: t.available_stock > 0 ? t.available_stock : null,
-      managementFees: Number(t.management_fees),
-    }));
+    return data.map((t: any) => {
+      // Calcular cuántas se han vendido realmente según el historial de pedidos
+      const soldCount = t.order_items?.reduce((acc: number, curr: any) => acc + (curr.quantity || 0), 0) || 0;
+      
+      return {
+        id: t.id,
+        priceId: t.stripe_price_id || "price_placeholder",
+        name: t.name,
+        description: t.description || "",
+        price: Number(t.price),
+        // Stock es el remanente real en la base de datos
+        stock: t.available_stock !== null ? t.available_stock : null,
+        managementFees: Number(t.management_fees),
+        // Añadimos metadatos para el admin
+        soldCount: soldCount,
+        totalCapacity: t.available_stock !== null ? (t.available_stock + soldCount) : null
+      };
+    });
   } catch (err) {
     console.warn("[Supabase] Error de conexion, fallback a mockData:", err);
     return mockTickets;
@@ -309,6 +344,7 @@ export async function getFaqs(): Promise<FAQ[]> {
       id: f.id,
       question: f.question,
       answer: f.answer,
+      sort_order: f.sort_order,
     }));
   } catch (err) {
     console.warn("[Supabase] Error de conexion, fallback a mockData:", err);
@@ -344,6 +380,7 @@ export async function getOrders(limit = 10) {
     email: o.customer_email,
     total: o.total_amount,
     status: o.status,
+    marketingConsent: o.marketing_consent,
     date: new Date(o.created_at).toLocaleDateString("es-ES"),
     tickets: o.order_items?.map((item: any) => 
       `${item.quantity}x ${item.tickets?.name || "Entrada"}`
@@ -367,7 +404,12 @@ export async function getSalesStats() {
     };
   }
 
-  const completedOrders = orders.filter((o: any) => o.status === "completado" || o.status === "paid" || o.status === "pending");
+  const completedOrders = orders.filter((o: any) => 
+    o.status === "completado" || 
+    o.status === "completed" || 
+    o.status === "paid" || 
+    o.status === "pending"
+  );
   
   const totalRevenue = completedOrders.reduce((acc: number, curr: any) => acc + Number(curr.total_amount || 0), 0);
   const totalTicketsSold = completedOrders.reduce((acc: number, curr: any) => {

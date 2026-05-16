@@ -48,58 +48,90 @@ export default async function InfoPage() {
       </section>
 
       {/* EVENT STATS / ASYMMETRIC GRID */}
+      {/* EVENT STATS / ASYMMETRIC GRID */}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-gutter mb-xl">
         {/* Card 1 - Primary */}
-        <div className="bg-surface-container-high p-lg border-2 border-outline-variant">
-          <span className="material-symbols-outlined text-primary text-4xl mb-md block">
-            sports_martial_arts
-          </span>
-          <h4 className="font-headline-lg text-headline-lg leading-none">
-            {String(eventData.totalFights || 10).padStart(2, '0')}
-          </h4>
-          <p className="font-label-bold text-label-bold uppercase text-primary">COMBATES ÉLITE</p>
-          <div className="mt-md h-1 w-full bg-outline-variant">
-            <div className="h-full w-full bg-primary"></div>
+        <div className="bg-surface-container-high p-lg border-2 border-outline-variant flex flex-col justify-between h-full overflow-hidden">
+          <div>
+            <span className="material-symbols-outlined text-primary text-4xl mb-md block">
+              sports_martial_arts
+            </span>
+            <h4 className="font-headline-lg text-headline-lg leading-none">
+              {String(eventData.totalFights || 10).padStart(2, '0')}
+            </h4>
+            <p className="font-display-md text-[32px] font-bold leading-tight uppercase text-primary mt-sm">COMBATES ÉLITE</p>
+            <div className="mt-md h-1 w-full bg-outline-variant">
+              <div className="h-full w-full bg-primary"></div>
+            </div>
           </div>
+          {eventData.cardFightsText && (
+            <p className="mt-md font-body-lg text-[20px] text-on-surface leading-snug">
+              {eventData.cardFightsText}
+            </p>
+          )}
         </div>
+
         {/* Card 2 - Yellow */}
-        <div className="bg-surface-container-high p-lg border-2 border-outline-variant">
-          <span className="material-symbols-outlined text-neon-yellow text-4xl mb-md block">
-            mic_external_on
-          </span>
-          <h4 className="font-headline-lg text-headline-lg leading-none">
-            {String(eventData.totalArtists || 3).padStart(2, '0')}
-          </h4>
-          <p className="font-label-bold text-label-bold uppercase text-neon-yellow">CONCIERTOS RAP</p>
-          <div className="mt-md h-1 w-full bg-outline-variant">
-            <div className="h-full w-full bg-neon-yellow"></div>
+        <div className="bg-surface-container-high p-lg border-2 border-outline-variant flex flex-col justify-between h-full overflow-hidden">
+          <div>
+            <span className="material-symbols-outlined text-neon-yellow text-4xl mb-md block">
+              mic_external_on
+            </span>
+            <h4 className="font-headline-lg text-headline-lg leading-none">
+              {String(eventData.totalArtists || 3).padStart(2, '0')}
+            </h4>
+            <p className="font-display-md text-[32px] font-bold leading-tight uppercase text-neon-yellow mt-sm">CONCIERTOS RAP</p>
+            <div className="mt-md h-1 w-full bg-outline-variant">
+              <div className="h-full w-full bg-neon-yellow"></div>
+            </div>
           </div>
+          {eventData.cardArtistsText && (
+            <p className="mt-md font-body-lg text-[20px] text-on-surface leading-snug">
+              {eventData.cardArtistsText}
+            </p>
+          )}
         </div>
+
         {/* Card 3 - Primary */}
-        <div className="bg-surface-container-high p-lg border-2 border-outline-variant">
-          <span className="material-symbols-outlined text-primary text-4xl mb-md block">
-            local_bar
-          </span>
-          <h4 className="font-headline-lg text-headline-lg leading-none">
-            {eventData.hasBars === false ? "0" : (eventData.totalBars !== undefined ? String(eventData.totalBars).padStart(2, '0') : "02")}
-          </h4>
-          <p className="font-label-bold text-label-bold uppercase text-primary">{eventData.hasBars === false ? "SIN BARRAS" : "BARRAS COMPLETAS"}</p>
-          <div className="mt-md h-1 w-full bg-outline-variant">
-            <div className="h-full w-full bg-primary"></div>
+        <div className="bg-surface-container-high p-lg border-2 border-outline-variant flex flex-col justify-between h-full overflow-hidden">
+          <div>
+            <span className="material-symbols-outlined text-primary text-4xl mb-md block">
+              local_bar
+            </span>
+            <h4 className="font-headline-lg text-headline-lg leading-none">
+              {eventData.hasBars === false ? "0" : (eventData.totalBars !== undefined ? String(eventData.totalBars).padStart(2, '0') : "02")}
+            </h4>
+            <p className="font-display-md text-[32px] font-bold leading-tight uppercase text-primary mt-sm">{eventData.hasBars === false ? "SIN BARRAS" : "BARRAS"}</p>
+            <div className="mt-md h-1 w-full bg-outline-variant">
+              <div className="h-full w-full bg-primary"></div>
+            </div>
           </div>
+          {eventData.cardBarsText && (
+            <p className="mt-md font-body-lg text-[20px] text-on-surface leading-snug">
+              {eventData.cardBarsText}
+            </p>
+          )}
         </div>
+
         {/* Card 4 - Yellow */}
-        <div className="bg-surface-container-high p-lg border-2 border-outline-variant">
-          <span className="material-symbols-outlined text-neon-yellow text-4xl mb-md block">
-            pause_circle
-          </span>
-          <h4 className="font-headline-lg text-headline-lg leading-none">
-            {String(eventData.breakTimes || "02").padStart(2, '0')}
-          </h4>
-          <p className="font-label-bold text-label-bold uppercase text-neon-yellow">DESCANSOS</p>
-          <div className="mt-md h-1 w-full bg-outline-variant">
-            <div className="h-full w-full bg-neon-yellow"></div>
+        <div className="bg-surface-container-high p-lg border-2 border-outline-variant flex flex-col justify-between h-full overflow-hidden">
+          <div>
+            <span className="material-symbols-outlined text-neon-yellow text-4xl mb-md block">
+              pause_circle
+            </span>
+            <h4 className="font-headline-lg text-headline-lg leading-none">
+              {String(eventData.totalBreaks || 0).padStart(2, '0')}
+            </h4>
+            <p className="font-display-md text-[32px] font-bold leading-tight uppercase text-neon-yellow mt-sm">DESCANSOS</p>
+            <div className="mt-md h-1 w-full bg-outline-variant">
+              <div className="h-full w-full bg-neon-yellow"></div>
+            </div>
           </div>
+          {eventData.breakTimes && (
+            <p className="mt-md font-body-lg text-[20px] text-on-surface leading-snug">
+              {eventData.breakTimes}
+            </p>
+          )}
         </div>
       </section>
 
@@ -116,7 +148,7 @@ export default async function InfoPage() {
               {eventData.weighInIsFree === false ? "ENTRADA DE PAGO" : "ENTRADA GRATUITA"}
             </div>
           </div>
-          <div className="font-body-lg uppercase tracking-tight">
+          <div className="text-xl md:text-2xl font-body-lg uppercase tracking-tight leading-snug">
             <p className="mb-md">
               {eventData.weighInText || "SÉ TESTIGO DEL PRIMER ENFRENTAMIENTO. LOS ATLETAS SE ENFRENTAN A LA BÁSCULA ANTES DE LA JAULA. ACCESO COMPLETO A PRENSA. INCLUYE SESIÓN DE MEET & GREET CON FANS."}
             </p>
@@ -140,29 +172,49 @@ export default async function InfoPage() {
           <div className="border-t-4 border-on-surface pt-md mb-lg">
             <h3 className="font-headline-lg text-headline-lg uppercase mb-md italic">{eventData.locationLogisticsTitle || "LOGÍSTICA DEL RECINTO"}</h3>
             <div className="space-y-md">
-              <div className="flex justify-between border-b border-outline-variant py-sm">
-                <span className="font-label-bold uppercase">AFORO</span>
-                <span className="font-body-md">2,500 ESPECTADORES</span>
-              </div>
-              <div className="flex justify-between border-b border-outline-variant py-sm">
-                <span className="font-label-bold uppercase">COMIDA Y BEBIDA</span>
-                <span className="font-body-md">2 BARRAS COMPLETAS + SNACKS</span>
-              </div>
-              <div className="flex justify-between border-b border-outline-variant py-sm">
-                <span className="font-label-bold uppercase">INSTALACIONES</span>
-                <span className="font-body-md">ASEOS + PUESTOS DE MERCH</span>
-              </div>
-              <div className="flex justify-between border-b border-outline-variant py-sm">
-                <span className="font-label-bold uppercase">PARKING</span>
-                <span className="font-body-md">APARCAMIENTO PÚBLICO ADYACENTE</span>
-              </div>
+              {eventData.locationLogistics ? (
+                eventData.locationLogistics.split('\n').filter(line => line.trim()).map((line, idx) => {
+                  const [label, ...valueParts] = line.split(':');
+                  const value = valueParts.join(':')?.trim();
+                  
+                  return (
+                    <div key={idx} className="flex justify-between items-center border-b border-outline-variant py-sm gap-md">
+                      <span className="font-label-bold uppercase text-on-surface whitespace-nowrap text-[14px]">
+                        {value ? label.trim() : "DETALLE"}
+                      </span>
+                      <span className="font-body-md text-white text-right text-[14px]">
+                        {value || label.trim()}
+                      </span>
+                    </div>
+                  );
+                })
+              ) : (
+                <>
+                  <div className="flex justify-between items-center border-b border-outline-variant py-sm">
+                    <span className="font-label-bold uppercase text-on-surface text-[14px]">AFORO</span>
+                    <span className="font-body-md text-white text-[14px]">2,500 ESPECTADORES</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-outline-variant py-sm">
+                    <span className="font-label-bold uppercase text-on-surface text-[14px]">COMIDA Y BEBIDA</span>
+                    <span className="font-body-md text-white text-[14px]">2 BARRAS COMPLETAS + SNACKS</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-outline-variant py-sm">
+                    <span className="font-label-bold uppercase text-on-surface text-[14px]">INSTALACIONES</span>
+                    <span className="font-body-md text-white text-[14px]">ASEOS + PUESTOS DE MERCH</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-outline-variant py-sm">
+                    <span className="font-label-bold uppercase text-on-surface text-[14px]">PARKING</span>
+                    <span className="font-body-md text-white text-[14px]">APARCAMIENTO PÚBLICO ADYACENTE</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           {/* Important Notice */}
           <div className="bg-surface-container-low p-lg border-2 border-outline mt-lg">
             <div className="flex items-center gap-md mb-md text-primary">
               <span className="material-symbols-outlined">info</span>
-              <h4 className="font-headline-md uppercase">AVISO IMPORTANTE</h4>
+              <h4 className="text-[32px] md:text-[42px] font-headline-md uppercase leading-tight">AVISO IMPORTANTE</h4>
             </div>
             <p className="font-body-md uppercase text-on-surface-variant">
               {eventData.weighInNotice || "NO SE PERMITE LA ENTRADA DE COMIDA O BEBIDA EXTERNA. CONTROLES DE SEGURIDAD EN LA ENTRADA. UNA VEZ FUERA, NO SE PERMITE VOLVER A ENTRAR SIN UNA NUEVA ENTRADA. ADVERTENCIA DE VOLUMEN INDUSTRIAL."}
@@ -173,8 +225,8 @@ export default async function InfoPage() {
         <div className="md:col-span-5 h-full">
           <div className="h-full bg-surface-container p-gutter border-2 border-outline-variant flex flex-col justify-between">
             <div>
-              <p className="font-label-bold uppercase text-primary mb-sm">UBICACIÓN MAPA</p>
-              <h4 className="font-headline-md uppercase mb-lg">{eventData.locationName}</h4>
+              <p className="text-[32px] md:text-[42px] font-headline-md uppercase text-primary mb-sm leading-tight">UBICACIÓN MAPA</p>
+              <h4 className="font-body-md uppercase text-on-surface-variant mb-lg leading-relaxed">{eventData.locationName}</h4>
             </div>
             <div className="grow relative bg-background border border-outline-variant grayscale opacity-70 mb-lg min-h-[200px] overflow-hidden group">
               <iframe 

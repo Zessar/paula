@@ -1,10 +1,11 @@
 "use server";
 
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createServerSupabaseClient, assertAdmin } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { ArtistSchema, type ArtistInput } from "@/lib/validations/admin";
 
 export async function createArtist(data: ArtistInput) {
+  await assertAdmin();
   const result = ArtistSchema.safeParse(data);
   if (!result.success) {
     return { success: false, error: "Datos inválidos" };
@@ -21,7 +22,9 @@ export async function createArtist(data: ArtistInput) {
     profile_link: `/artistas/${slug}`,
     instagram_url: result.data.instagram_url || null,
     spotify_url: result.data.spotify_url || null,
+    spotify_embed_url: result.data.spotify_embed_url || null,
     youtube_url: result.data.youtube_url || null,
+    subtitle: result.data.subtitle || null,
     description: result.data.description || null,
     video_url: result.data.video_url || null,
     hero_image: result.data.hero_image || null,
@@ -39,6 +42,7 @@ export async function createArtist(data: ArtistInput) {
 }
 
 export async function updateArtist(data: ArtistInput) {
+  await assertAdmin();
   const result = ArtistSchema.safeParse(data);
   if (!result.success || !result.data.id) {
     return { success: false, error: "Datos inválidos" };
@@ -57,7 +61,9 @@ export async function updateArtist(data: ArtistInput) {
       profile_link: `/artistas/${slug}`,
       instagram_url: result.data.instagram_url || null,
       spotify_url: result.data.spotify_url || null,
+      spotify_embed_url: result.data.spotify_embed_url || null,
       youtube_url: result.data.youtube_url || null,
+      subtitle: result.data.subtitle || null,
       description: result.data.description || null,
       video_url: result.data.video_url || null,
       hero_image: result.data.hero_image || null,
@@ -75,6 +81,7 @@ export async function updateArtist(data: ArtistInput) {
 }
 
 export async function deleteArtist(id: string) {
+  await assertAdmin();
   const supabase: any = await createServerSupabaseClient();
 
   const { error } = await supabase.from("artists").delete().eq("id", id);

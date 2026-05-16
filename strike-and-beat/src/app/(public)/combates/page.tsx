@@ -1,19 +1,22 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { getFights } from "@/lib/supabase/queries";
+import { getFights, getEventInfo } from "@/lib/supabase/queries";
 
 export default async function CombatesPage() {
-  const fights = await getFights();
+  const [fights, eventInfo] = await Promise.all([
+    getFights(),
+    getEventInfo()
+  ]);
 
   return (
     <main className="max-w-container-max mx-auto px-0 md:px-gutter py-xl">
       {/* Header */}
-      <div className="mb-xl px-gutter md:px-0">
-        <h2 className="font-headline-lg text-headline-lg uppercase text-primary border-l-8 border-primary pl-md">
-          Próximos Combates
+      <div className="mb-xl border-l-8 border-neon-yellow pl-lg mx-gutter md:mx-0">
+        <h2 className="font-headline-lg text-headline-lg uppercase text-primary">
+          {eventInfo.fightsTitle || "Próximos Combates"}
         </h2>
-        <p className="font-body-lg text-on-surface-variant max-w-2xl mt-md">
-          RAW INDUSTRIAL ENERGY. La élite del underground se enfrenta en el cuadrilátero. Sin piedad. Sin límites.
+        <p className="font-display-md text-[24px] md:text-[36px] text-white max-w-4xl mt-lg uppercase leading-none italic">
+          {eventInfo.fightsDescription || "RAW INDUSTRIAL ENERGY. La élite del underground se enfrenta en el cuadrilátero. Sin piedad. Sin límites."}
         </p>
       </div>
 
@@ -24,9 +27,6 @@ export default async function CombatesPage() {
           const accentColor = isEven ? "bg-primary" : "bg-neon-yellow";
           const accentText = isEven ? "text-primary" : "text-neon-yellow";
           const accentBorder = isEven ? "border-primary" : "border-neon-yellow";
-          const accentOnColor = isEven ? "text-surface" : "text-black";
-          const hoverBg = isEven ? "hover:bg-primary" : "hover:bg-neon-yellow";
-          const hoverText = isEven ? "hover:text-surface" : "hover:text-black";
 
           return (
             <div 
@@ -54,8 +54,8 @@ export default async function CombatesPage() {
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
                   <div className={`absolute bottom-md ${index % 2 === 0 ? "left-md" : "right-md"}`}>
-                    <span className={`${accentColor} ${accentOnColor} font-label-bold px-md py-xs uppercase tracking-widest`}>
-                      {fight.isFeatured ? "Main Event" : "Under Card"}
+                    <span className={`${accentColor} ${isEven ? "text-surface" : "text-surface"} font-label-bold px-md py-xs uppercase tracking-widest`}>
+                      {fight.badgeText || (fight.isFeatured ? "Main Event" : "Under Card")}
                     </span>
                   </div>
                 </div>
@@ -87,16 +87,33 @@ export default async function CombatesPage() {
                   </div>
                   <div className="flex flex-col md:flex-row items-center gap-md">
                     {fight.slug && (
-                      <Button asChild variant="outline" size="lg" className={`w-full md:w-auto font-headline-md text-lg uppercase border-2 ${accentBorder} ${accentText} ${hoverBg} ${hoverText}`}>
+                      <Button 
+                        asChild 
+                        variant="outline" 
+                        size="lg" 
+                        className={`w-full md:w-auto font-headline-md text-xl !border-2 transition-all ${
+                          isEven 
+                            ? "!border-primary !text-primary hover:!bg-primary hover:!text-surface" 
+                            : "!border-neon-yellow !text-neon-yellow hover:!bg-neon-yellow hover:!text-surface"
+                        }`}
+                      >
                         <Link href={`/combates/${fight.slug}`} className="flex items-center gap-2">
                           <span>VER COMBATE</span>
                         </Link>
                       </Button>
                     )}
-                    <Button asChild variant="primary" size="lg" className={`w-full md:w-auto font-headline-md text-xl uppercase ${accentColor} ${accentOnColor} hover:opacity-90`}>
+                    <Button 
+                      asChild 
+                      variant="outline" 
+                      size="lg" 
+                      className={`w-full md:w-auto font-headline-md text-xl !border-2 transition-all ${
+                          isEven 
+                            ? "!bg-primary !border-primary !text-surface hover:!bg-white hover:!border-white" 
+                            : "!bg-neon-yellow !border-neon-yellow !text-surface hover:!bg-white hover:!border-white"
+                        }`}
+                    >
                       <Link href="/entradas" className="flex items-center gap-2">
-                        <span>ADQUIRIR ENTRADAS</span>
-                        <span className="material-symbols-outlined">confirmation_number</span>
+                        <span>COMPRA TUS ENTRADAS</span>
                       </Link>
                     </Button>
                   </div>

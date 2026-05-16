@@ -17,6 +17,20 @@ function extractYouTubeId(url: string): string | null {
   return match ? match[1] : null;
 }
 
+
+/**
+ * Sanitiza HTML basico para la biografia.
+ * Solo permite: <strong>, <em>, <span class="text-primary">, <span class="text-neon-yellow">, <br>
+ */
+function sanitizeBioHtml(html: string): string {
+  // Permitir solo tags seguros
+  return html
+    .replace(/<(?!\/?(?:strong|em|br|span)\b)[^>]*>/gi, '')
+    // Solo permitir class con text-primary o text-neon-yellow en span
+    .replace(/<span(?:\s+(?:class="(?:text-primary|text-neon-yellow)"))?>/gi, (match) => match)
+    .replace(/\n/g, '<br />');
+}
+
 export default async function ArtistProfilePage({
   params,
 }: {
@@ -31,35 +45,41 @@ export default async function ArtistProfilePage({
 
   const videoId = artist.videoUrl ? extractYouTubeId(artist.videoUrl) : null;
 
+
+  // Detectar si la descripcion contiene HTML
+  const descriptionHasHtml = artist.description
+    ? /<[a-z][\s\S]*>/i.test(artist.description)
+    : false;
+
   return (
     <main className="min-h-screen">
       {/* HERO */}
-      <section className="relative min-h-[500px] flex items-end overflow-hidden">
+      <section className="relative min-h-[520px] md:min-h-[600px] flex items-end overflow-hidden">
         {/* Fondo */}
         <div className="absolute inset-0 z-0">
           {artist.heroImage ? (
             <img
-              className="w-full h-full object-cover grayscale contrast-125 brightness-50"
+              className="w-full h-full object-cover grayscale contrast-125 brightness-[0.35] scale-105"
               alt={artist.name}
               src={artist.heroImage}
             />
           ) : artist.image ? (
             <img
-              className="w-full h-full object-cover grayscale contrast-125 brightness-50"
+              className="w-full h-full object-cover grayscale contrast-125 brightness-[0.35] scale-105"
               alt={artist.name}
               src={artist.image}
             />
           ) : (
             <div className="w-full h-full bg-surface-container" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-container-max mx-auto w-full px-gutter pb-xl pt-[200px]">
-          <div className="flex flex-col md:flex-row items-end gap-xl">
+        <div className="relative z-10 max-w-container-max mx-auto w-full px-gutter pb-xl pt-[220px]">
+          <div className="flex flex-col md:flex-row items-start md:items-end gap-xl">
             {/* Foto de perfil */}
             {artist.image && (
-              <div className="w-[200px] h-[260px] md:w-[280px] md:h-[360px] overflow-hidden brutalist-border bg-surface-container shrink-0">
+              <div className="w-[200px] h-[260px] md:w-[280px] md:h-[360px] overflow-hidden brutalist-border bg-surface-container shrink-0 shadow-2xl">
                 <img
                   className="w-full h-full object-cover"
                   alt={artist.name}
@@ -87,42 +107,42 @@ export default async function ArtistProfilePage({
                 ))}
               </div>
 
-              {/* Redes sociales */}
-              <div className="flex gap-lg items-center">
+              {/* Redes sociales - ICONOS MAS GRANDES */}
+              <div className="flex gap-xl items-center">
                 {artist.instagramUrl && (
                   <Link
                     href={artist.instagramUrl}
                     target="_blank"
-                    className="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs"
+                    className="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-sm group"
                   >
-                    <span className="material-symbols-outlined" style={{ fontSize: "24px" }}>
+                    <span className="material-symbols-outlined transition-transform group-hover:scale-110" style={{ fontSize: "36px" }}>
                       photo_camera
                     </span>
-                    <span className="font-label-bold text-xs uppercase hidden md:inline">Instagram</span>
+                    <span className="font-label-bold text-sm uppercase hidden md:inline">Instagram</span>
                   </Link>
                 )}
                 {artist.spotifyUrl && (
                   <Link
                     href={artist.spotifyUrl}
                     target="_blank"
-                    className="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs"
+                    className="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-sm group"
                   >
-                    <span className="material-symbols-outlined" style={{ fontSize: "24px" }}>
+                    <span className="material-symbols-outlined transition-transform group-hover:scale-110" style={{ fontSize: "36px" }}>
                       headphones
                     </span>
-                    <span className="font-label-bold text-xs uppercase hidden md:inline">Spotify</span>
+                    <span className="font-label-bold text-sm uppercase hidden md:inline">Spotify</span>
                   </Link>
                 )}
                 {artist.youtubeUrl && (
                   <Link
                     href={artist.youtubeUrl}
                     target="_blank"
-                    className="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-xs"
+                    className="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-sm group"
                   >
-                    <span className="material-symbols-outlined" style={{ fontSize: "24px" }}>
+                    <span className="material-symbols-outlined transition-transform group-hover:scale-110" style={{ fontSize: "36px" }}>
                       play_circle
                     </span>
-                    <span className="font-label-bold text-xs uppercase hidden md:inline">YouTube</span>
+                    <span className="font-label-bold text-sm uppercase hidden md:inline">YouTube</span>
                   </Link>
                 )}
               </div>
@@ -136,22 +156,31 @@ export default async function ArtistProfilePage({
         <div className="grid grid-cols-1 md:grid-cols-12 gap-xl">
           {/* Columna Principal */}
           <div className="md:col-span-8 space-y-xl">
-            {/* Descripcion */}
+            {/* Descripcion / Biografia */}
             {artist.description && (
               <div>
-                <h2 className="font-headline-md text-headline-md uppercase mb-md border-l-4 border-primary pl-md">
+                <h2 className="font-display-xl text-headline-lg uppercase mb-md border-l-4 border-primary pl-md">
                   Biografia
                 </h2>
-                <p className="font-body-lg text-body-lg leading-relaxed text-on-surface-variant whitespace-pre-line">
-                  {artist.description}
-                </p>
+                {descriptionHasHtml ? (
+                  <div
+                    className="font-body-lg text-body-lg leading-relaxed text-on-surface-variant prose-artist"
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeBioHtml(artist.description),
+                    }}
+                  />
+                ) : (
+                  <p className="font-body-lg text-body-lg leading-relaxed text-on-surface-variant whitespace-pre-line">
+                    {artist.description}
+                  </p>
+                )}
               </div>
             )}
 
-            {/* Video */}
+            {/* Video de YouTube */}
             {videoId && (
               <div>
-                <h2 className="font-headline-md text-headline-md uppercase mb-md border-l-4 border-primary pl-md">
+                <h2 className="font-display-xl text-headline-lg uppercase mb-md border-l-4 border-primary pl-md">
                   En Accion
                 </h2>
                 <div className="brutalist-border overflow-hidden">
@@ -167,13 +196,15 @@ export default async function ArtistProfilePage({
                 </div>
               </div>
             )}
+
+
           </div>
 
           {/* Sidebar */}
           <div className="md:col-span-4 space-y-lg">
             {/* Ficha */}
             <div className="bg-surface-container brutalist-border p-lg space-y-md">
-              <h3 className="font-headline-md text-headline-sm uppercase text-primary">
+              <h3 className="font-display-xl text-headline-md uppercase text-primary">
                 Ficha Artista
               </h3>
               <div className="space-y-sm">
@@ -191,61 +222,65 @@ export default async function ArtistProfilePage({
                 </div>
               </div>
 
-              {/* Redes - Sidebar */}
+              {/* Redes - Sidebar - ICONOS MAS GRANDES */}
               <div className="pt-sm space-y-sm">
                 {artist.instagramUrl && (
                   <Link
                     href={artist.instagramUrl}
                     target="_blank"
-                    className="flex items-center gap-sm text-on-surface-variant hover:text-primary transition-colors"
+                    className="flex items-center gap-sm text-on-surface-variant hover:text-primary transition-colors group"
                   >
-                    <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>
+                    <span className="material-symbols-outlined transition-transform group-hover:scale-110" style={{ fontSize: "28px" }}>
                       photo_camera
                     </span>
-                    <span className="font-body-sm text-sm">Instagram</span>
+                    <span className="font-body-md">Instagram</span>
                   </Link>
                 )}
                 {artist.spotifyUrl && (
                   <Link
                     href={artist.spotifyUrl}
                     target="_blank"
-                    className="flex items-center gap-sm text-on-surface-variant hover:text-primary transition-colors"
+                    className="flex items-center gap-sm text-on-surface-variant hover:text-primary transition-colors group"
                   >
-                    <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>
+                    <span className="material-symbols-outlined transition-transform group-hover:scale-110" style={{ fontSize: "28px" }}>
                       headphones
                     </span>
-                    <span className="font-body-sm text-sm">Spotify</span>
+                    <span className="font-body-md">Spotify</span>
                   </Link>
                 )}
                 {artist.youtubeUrl && (
                   <Link
                     href={artist.youtubeUrl}
                     target="_blank"
-                    className="flex items-center gap-sm text-on-surface-variant hover:text-primary transition-colors"
+                    className="flex items-center gap-sm text-on-surface-variant hover:text-primary transition-colors group"
                   >
-                    <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>
+                    <span className="material-symbols-outlined transition-transform group-hover:scale-110" style={{ fontSize: "28px" }}>
                       play_circle
                     </span>
-                    <span className="font-body-sm text-sm">YouTube</span>
+                    <span className="font-body-md">YouTube</span>
                   </Link>
                 )}
               </div>
             </div>
 
-            {/* CTA */}
-            <div className="bg-primary p-lg space-y-md">
-              <h3 className="font-headline-md text-headline-sm uppercase text-on-primary">
-                No te lo pierdas
-              </h3>
-              <p className="font-body-md text-on-primary/80">
-                {artist.name} actuara en Strike & Beat. Consigue tu entrada antes de que se agoten.
-              </p>
-              <Button asChild variant="outline" size="lg" className="w-full font-headline-md text-xl bg-surface text-primary border-0 hover:bg-white">
-                <Link href="/entradas" className="flex items-center justify-center gap-2">
-                  <span>COMPRAR ENTRADAS</span>
-                  <span className="material-symbols-outlined">confirmation_number</span>
-                </Link>
-              </Button>
+            {/* CTA - MISMOS ESTILOS QUE PESAJE */}
+            <div className="bg-primary text-surface p-xl space-y-md relative overflow-hidden">
+              <div className="absolute right-0 top-0 opacity-10 rotate-45 transform translate-x-1/4 -translate-y-1/4">
+                <span className="material-symbols-outlined text-[200px]">confirmation_number</span>
+              </div>
+              <div className="relative z-10">
+                <h3 className="font-display-xl text-display-sm md:text-display-md uppercase leading-none mb-sm">
+                  No te lo pierdas
+                </h3>
+                <p className="text-xl md:text-2xl font-body-lg uppercase tracking-tight mb-lg leading-snug">
+                  {artist.name} actuara en Strike & Beat. Consigue tu entrada antes de que se agoten.
+                </p>
+                <Button asChild variant="dark" size="lg" className="w-full font-headline-md text-xl uppercase tracking-[0.2em]">
+                  <Link href="/entradas">
+                    ENTRADAS
+                  </Link>
+                </Button>
+              </div>
             </div>
 
             {/* Volver */}

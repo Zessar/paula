@@ -1,99 +1,142 @@
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import Stripe from "stripe";
+import { createServerClient } from "@supabase/ssr";
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+// Necesitamos el Supabase Admin Client para saltarnos las reglas RLS e insertar las compras
+function getAdminSupabase() {
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!, // Usar la SERVICE ROLE KEY para permisos absolutos (webhook)
+    {
+      cookies: {
+        getAll() {
+          return [];
+        },
+        setAll() {}
+      }
+    }
+  );
+}
 
 export async function POST(req: Request) {
   const body = await req.text();
-  const signature = req.headers.get("stripe-signature");
+  const signature = (await headers()).get("Stripe-Signature") as string;
 
-  if (!signature) {
-    return NextResponse.json({ error: "Falta la firma de Stripe" }, { status: 400 });
-  }
-
-  let event: Stripe.Event;
+  let event;
 
   try {
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      console.warn("Falta STRIPE_WEBHOOK_SECRET. Verifica el archivo .env.local");
+      return NextResponse.json({ error: "Webhook secret missing" }, { status: 400 });
+    }
+
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err: any) {
-    console.error(`Error verificando Webhook: ${err.message}`);
-    return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
+    console.error(`⚠️  Webhook signature verification failed.`, err.message);
+    return NextResponse.json({ error: err.message }, { status: 400 });
   }
 
-  // Manejar los eventos
-  switch (event.type) {
-    case "checkout.session.completed": {
-      const session = event.data.object as Stripe.Checkout.Session;
-      
-      console.log("Pago completado para la sesion:", session.id);
-      
-      // 1. Obtener los line_items detallados de Stripe
-      const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
-      
-      // 2. Preparar el cliente de Supabase (usamos el admin o el server client)
-      // Nota: Idealmente usar una Service Role Key si RLS es estricto, 
-      // pero segun el master-script, RLS permite escritura publica temporalmente.
-      const { createClient } = await import("@supabase/supabase-js");
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-      );
+  // Manejar el evento de pago completado
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object as any;
 
-      // 3. Insertar la Orden en Supabase
+    console.log("💰 ¡Pago recibido exitosamente!", session.id);
+
+    try {
+      const supabase = getAdminSupabase();
+
+      // 1. Extraer los datos del carrito de la metadata de la sesión
+      const cartData = JSON.parse(session.metadata?.cartData || "[]");
+      const customerDni = session.metadata?.documentId || "No proporcionado";
+      const customerName = session.customer_details?.name || "Desconocido";
+      const customerEmail = session.customer_details?.email || "Sin email";
+      const totalAmount = session.amount_total ? session.amount_total / 100 : 0; // Stripe devuelve céntimos
+      const marketingConsent = session.metadata?.marketingConsent === "true";
+
+      if (cartData.length === 0) {
+        console.warn("⚠️  Sesión sin datos de carrito en la metadata.");
+        return NextResponse.json({ received: true });
+      }
+
+      // 2. Insertar el Pedido (Order)
       const { data: order, error: orderError } = await supabase
         .from("orders")
         .insert({
-          customer_name: session.customer_details?.name || "Cliente Desconocido",
-          customer_email: session.customer_details?.email || "",
-          customer_dni: session.metadata?.documentId || "S/D",
+          customer_email: customerEmail,
+          customer_name: customerName,
+          customer_dni: customerDni,
           stripe_session_id: session.id,
-          total_amount: (session.amount_total || 0) / 100, // Stripe usa centimos
-          status: "completado"
+          total_amount: totalAmount,
+          status: "completed",
+          marketing_consent: marketingConsent
         })
         .select()
         .single();
 
-      if (orderError) {
-        console.error("Error al crear la orden en Supabase:", orderError);
-        return NextResponse.json({ error: "Error interno al registrar la orden" }, { status: 500 });
+      if (orderError || !order) {
+        console.error("Error al insertar el pedido en BD:", orderError);
+        throw new Error("No se pudo crear el pedido");
       }
 
-      // 4. Registrar los items y actualizar stock
-      for (const item of lineItems.data) {
-        // Buscamos el ticket por su stripe_price_id
-        const { data: ticket } = await supabase
+      // 3. Preparar los Order Items
+      const orderItems = cartData.map((item: any) => ({
+        order_id: order.id,
+        ticket_id: item.id,
+        quantity: item.q,
+        price_at_purchase: item.p
+      }));
+
+      // 4. Insertar los Order Items
+      const { error: itemsError } = await supabase
+        .from("order_items")
+        .insert(orderItems);
+
+      if (itemsError) {
+        console.error("Error al insertar los items del pedido:", itemsError);
+        throw new Error("No se pudieron crear los order items");
+      }
+
+      // 5. Actualizar el inventario (Restar stock)
+      for (const item of cartData) {
+        // Ejecutamos una llamada RPC (función de base de datos) o hacemos lectura + escritura.
+        // Lo más seguro es usar un RPC para evitar condiciones de carrera, pero como somos admin:
+        const { data: ticketData } = await supabase
           .from("tickets")
-          .select("id, available_stock")
-          .eq("stripe_price_id", item.price?.id)
+          .select("available_stock")
+          .eq("id", item.id)
           .single();
 
-        if (ticket) {
-          // Insertar en order_items
-          await supabase.from("order_items").insert({
-            order_id: order.id,
-            ticket_id: ticket.id,
-            quantity: item.quantity || 1,
-            price_at_purchase: (item.price?.unit_amount || 0) / 100
-          });
-
-          // Restar stock
-          if (ticket.available_stock !== null) {
-            const newStock = Math.max(0, ticket.available_stock - (item.quantity || 1));
-            await supabase
-              .from("tickets")
-              .update({ available_stock: newStock })
-              .eq("id", ticket.id);
-          }
+        if (ticketData && ticketData.available_stock !== null) {
+          const newStock = Math.max(0, ticketData.available_stock - item.q);
+          await supabase
+            .from("tickets")
+            .update({ available_stock: newStock })
+            .eq("id", item.id);
         }
       }
-      
-      break;
+
+      console.log("✅ Pedido creado y stock actualizado correctamente.");
+
+      // Forzar revalidación de la caché para que el badge de stock se actualice en la web
+      try {
+        const { revalidatePath } = await import("next/cache");
+        revalidatePath("/entradas");
+        revalidatePath("/", "layout");
+      } catch (e) {
+        console.error("Error revalidating path in webhook:", e);
+      }
+
+      // NOTA: Aquí en el futuro puedes integrar el envío del email con las entradas usando SendGrid
+
+    } catch (err) {
+      console.error("Error procesando checkout.session.completed:", err);
+      // Stripe reintentará si devolvemos error 500
+      return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
-    
-    default:
-      console.log(`Evento no manejado: ${event.type}`);
   }
 
+  // Devolver un 200 OK para que Stripe sepa que hemos recibido el evento
   return NextResponse.json({ received: true });
 }

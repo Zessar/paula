@@ -1,6 +1,6 @@
 "use server";
 
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createServerSupabaseClient, assertAdmin } from "@/lib/supabase/server";
 import {
   eventData,
   fighters,
@@ -11,6 +11,11 @@ import {
 } from "@/lib/mockData";
 
 export async function seedDatabase() {
+  // BLOQUEO TOTAL en produccion
+  if (process.env.NODE_ENV === "production") {
+    return { success: false, message: "Seed bloqueado en produccion.", details: {} };
+  }
+  await assertAdmin();
   const supabase: any = await createServerSupabaseClient();
   const results = {
     success: true,

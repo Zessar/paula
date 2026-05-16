@@ -27,3 +27,14 @@ export async function createServerSupabaseClient() {
     }
   );
 }
+
+export async function assertAdmin() {
+  const supabase = await createServerSupabaseClient();
+  const { data: { user }, error } = await supabase.auth.getUser();
+  
+  if (error || !user) {
+    throw new Error("Acceso denegado: no autenticado.");
+  }
+  
+  return user;
+}

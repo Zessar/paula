@@ -6,13 +6,15 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import type { Ticket } from "@/lib/mockData"
 
-import { updateTicketPrice } from "@/app/actions/tickets"
+import { updateTicketPrice, createTicket } from "@/app/actions/tickets"
 
 /* ------------------------------------------------------------------ */
 /*  ESQUEMA DE EDICION DE PRECIO                                       */
 /* ------------------------------------------------------------------ */
 
-const EditPriceSchema = z.object({
+const TicketFormSchema = z.object({
+  name: z.string().min(2, "El nombre es obligatorio"),
+  description: z.string().optional().nullable(),
   price: z.coerce
     .number({ message: "Debe ser un numero" })
     .positive("El precio debe ser mayor que 0"),
@@ -27,7 +29,7 @@ const EditPriceSchema = z.object({
     .optional(),
 })
 
-type EditPriceInput = z.infer<typeof EditPriceSchema>
+type TicketFormInput = z.infer<typeof TicketFormSchema>
 
 /* ------------------------------------------------------------------ */
 /*  COMPONENTE PAGINA                                                  */
@@ -36,6 +38,7 @@ type EditPriceInput = z.infer<typeof EditPriceSchema>
 export function AdminEntradasClient({ initialTickets }: { initialTickets: Ticket[] }) {
   const [ticketsData, setTicketsData] = useState<Ticket[]>(initialTickets)
   const [editingTicket, setEditingTicket] = useState<Ticket | null>(null)
+  const [isCreating, setIsCreating] = useState(false)
   const [saveSuccess, setSaveSuccess] = useState(false)
   const [apiError, setApiError] = useState("")
 
@@ -45,8 +48,8 @@ export function AdminEntradasClient({ initialTickets }: { initialTickets: Ticket
     reset,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<EditPriceInput>({
-    resolver: zodResolver(EditPriceSchema) as any,
+  } = useForm<TicketFormInput>({
+    resolver: zodResolver(TicketFormSchema) as any,
   })
 
   const watchedPrice = watch("price")
@@ -54,27 +57,85 @@ export function AdminEntradasClient({ initialTickets }: { initialTickets: Ticket
 
   const openEditor = (ticket: Ticket) => {
     setEditingTicket(ticket)
+    setIsCreating(false)
     setSaveSuccess(false)
     setApiError("")
     reset({
+      name: ticket.name,
+      description: ticket.description,
       price: ticket.price,
       management_fees: ticket.managementFees,
-      available_stock: ticket.stock,
+      // Usamos el totalCapacity (Aforo) para que el admin vea lo que configuró originalmente
+      available_stock: ticket.totalCapacity ?? ticket.stock,
+    })
+  }
+
+  const openCreator = () => {
+    setEditingTicket(null)
+    setIsCreating(true)
+    setSaveSuccess(false)
+    setApiError("")
+    reset({
+      name: "",
+      description: "",
+      price: 10,
+      management_fees: 2.5,
+      available_stock: 100,
     })
   }
 
   const closeEditor = () => {
     setEditingTicket(null)
+    setIsCreating(false)
     setSaveSuccess(false)
     setApiError("")
   }
 
-  const onSubmit = async (data: EditPriceInput) => {
-    if (!editingTicket) return
+  const onSubmit = async (data: TicketFormInput) => {
     setApiError("")
+
+    if (isCreating) {
+      const result = await createTicket({
+        name: data.name,
+        description: data.description || "",
+        price: data.price,
+        management_fees: data.management_fees,
+        available_stock: data.available_stock ?? undefined,
+      })
+
+      if (!result.success) {
+        setApiError(result.error || "Error al crear")
+        return
+      }
+
+      // Recargar o actualizar lista local
+      if (result.ticket) {
+        const newT: Ticket = {
+          id: result.ticket.id,
+          name: result.ticket.name,
+          description: result.ticket.description,
+          price: result.ticket.price,
+          managementFees: result.ticket.management_fees,
+          stock: result.ticket.available_stock,
+          priceId: result.ticket.stripe_price_id
+        }
+        setTicketsData([newT, ...ticketsData])
+      }
+      
+      setSaveSuccess(true)
+      setTimeout(() => {
+        setSaveSuccess(false)
+        closeEditor()
+      }, 2000)
+      return
+    }
+
+    if (!editingTicket) return
 
     const result = await updateTicketPrice({
       id: editingTicket.id,
+      name: data.name,
+      description: data.description || "",
       price: data.price,
       management_fees: data.management_fees,
       available_stock: data.available_stock ?? undefined,
@@ -90,6 +151,8 @@ export function AdminEntradasClient({ initialTickets }: { initialTickets: Ticket
         t.id === editingTicket.id
           ? { 
               ...t, 
+              name: data.name,
+              description: data.description || "",
               price: data.price, 
               managementFees: data.management_fees,
               stock: data.available_stock ?? null
@@ -163,9 +226,13 @@ export function AdminEntradasClient({ initialTickets }: { initialTickets: Ticket
               </span>
               Catalogo
             </h3>
-            <span className="font-caption text-caption text-outline uppercase tracking-wider">
-              Fuente: mockData.ts
-            </span>
+            <button
+              onClick={openCreator}
+              className="px-md py-sm bg-neon-yellow text-black border-2 border-neon-yellow font-label-bold text-xs uppercase tracking-wider hover:bg-black hover:text-neon-yellow transition-all flex items-center gap-xs"
+            >
+              <span className="material-symbols-outlined text-[16px]">add_circle</span>
+              Crear Nueva
+            </button>
           </div>
 
           <div className="overflow-x-auto">
@@ -223,14 +290,17 @@ export function AdminEntradasClient({ initialTickets }: { initialTickets: Ticket
                       <td className="px-lg py-md text-right font-caption text-caption text-on-surface-variant">
                         +{ticket.managementFees.toFixed(2)}€
                       </td>
-                      <td className="px-lg py-md text-center font-label-bold text-label-bold text-on-surface">
-                        {ticket.stock !== null ? (
-                          <span className={ticket.stock < 50 ? "text-error" : ""}>
-                            {ticket.stock}
+                      <td className="px-lg py-md text-center">
+                        <div className="flex flex-col items-center">
+                          <span className="font-label-bold text-label-bold text-on-surface">
+                            {ticket.stock !== null ? ticket.stock : "---"}
                           </span>
-                        ) : (
-                          <span className="text-outline">---</span>
-                        )}
+                          {ticket.soldCount !== undefined && ticket.soldCount > 0 && (
+                            <span className="font-caption text-[10px] text-neon-yellow uppercase mt-1">
+                              {ticket.soldCount} VENDIDAS
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="px-lg py-md text-center">
                         <span className="font-caption text-caption text-outline bg-surface-container-low px-sm py-xs">
@@ -261,17 +331,17 @@ export function AdminEntradasClient({ initialTickets }: { initialTickets: Ticket
         </div>
 
         {/* ---------------------------------------------------------- */}
-        {/*  PANEL LATERAL: EDITOR DE PRECIOS                          */}
+        {/*  PANEL LATERAL: EDITOR / CREADOR                           */}
         {/* ---------------------------------------------------------- */}
-        {editingTicket && (
+        {(editingTicket || isCreating) && (
           <div className="lg:col-span-5 bg-surface-container border-2 border-neon-yellow self-start sticky top-24">
             {/* Header del editor */}
             <div className="px-lg py-md border-b-2 border-neon-yellow flex items-center justify-between bg-neon-yellow/5">
               <h3 className="font-headline-md text-headline-md uppercase text-neon-yellow flex items-center gap-sm">
                 <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  edit_note
+                  {isCreating ? "add_box" : "edit_note"}
                 </span>
-                Editar Precio
+                {isCreating ? "Crear Nueva Entrada" : "Editar Entrada"}
               </h3>
               <button
                 onClick={closeEditor}
@@ -282,13 +352,46 @@ export function AdminEntradasClient({ initialTickets }: { initialTickets: Ticket
             </div>
 
             {/* Info del ticket */}
-            <div className="px-lg py-md border-b border-outline-variant bg-surface-container-low">
-              <p className="font-label-bold text-label-bold text-on-surface uppercase">{editingTicket.name}</p>
-              <p className="font-caption text-caption text-outline mt-xs">{editingTicket.id}</p>
-            </div>
+            {!isCreating && editingTicket && (
+              <div className="px-lg py-md border-b border-outline-variant bg-surface-container-low">
+                <p className="font-label-bold text-label-bold text-on-surface uppercase">{editingTicket.name}</p>
+                <p className="font-caption text-caption text-outline mt-xs">{editingTicket.id}</p>
+              </div>
+            )}
 
             {/* Formulario */}
             <form onSubmit={handleSubmit(onSubmit)} className="p-lg space-y-md">
+              
+              {/* Campo: Nombre */}
+              <div className="flex flex-col gap-xs">
+                <label className="font-label-bold text-on-surface-variant uppercase text-xs tracking-wider">
+                  Nombre de la Entrada
+                </label>
+                <input
+                  {...register("name")}
+                  className="bg-surface border-2 border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-md w-full font-body-md uppercase"
+                  placeholder="EJ: ENTRADA GENERAL"
+                />
+                {errors.name && (
+                  <p className="text-[#c9a74d] font-caption text-xs flex items-center gap-1">
+                    <span className="material-symbols-outlined text-xs">warning</span>
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Campo: Descripción */}
+              <div className="flex flex-col gap-xs">
+                <label className="font-label-bold text-on-surface-variant uppercase text-xs tracking-wider">
+                  Descripción
+                </label>
+                <textarea
+                  {...register("description")}
+                  className="bg-surface border-2 border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-md w-full font-body-md h-24 resize-none"
+                  placeholder="Describe qué incluye la entrada..."
+                />
+              </div>
+
               {/* Campo: Precio */}
               <div className="flex flex-col gap-xs">
                 <label className="font-label-bold text-on-surface-variant uppercase text-xs tracking-wider">
@@ -339,10 +442,10 @@ export function AdminEntradasClient({ initialTickets }: { initialTickets: Ticket
                 )}
               </div>
 
-              {/* Campo: Stock Disponible */}
+              {/* Campo: Aforo / Capacidad Total */}
               <div className="flex flex-col gap-xs">
                 <label className="font-label-bold text-on-surface-variant uppercase text-xs tracking-wider">
-                  Stock Disponible (Unidades)
+                  Aforo / Capacidad Total (Unidades)
                 </label>
                 <div className="relative">
                   <input
@@ -350,12 +453,14 @@ export function AdminEntradasClient({ initialTickets }: { initialTickets: Ticket
                     className="bg-surface border-2 border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-md w-full font-body-md text-body-md"
                     type="number"
                     min="0"
-                    placeholder="Dejar vacío para ilimitado"
+                    placeholder="Ej: 500"
                   />
                 </div>
-                <p className="font-caption text-caption text-outline">
-                  Indica el número total de entradas a la venta.
-                </p>
+                <div className="bg-neon-yellow/10 border-l-4 border-neon-yellow p-sm mt-xs">
+                  <p className="font-caption text-xs text-on-surface italic">
+                    <span className="font-label-bold uppercase">Nota:</span> Indica el total de entradas disponibles para este tipo. El sistema restará automáticamente las entradas ya vendidas para mostrar el remanente real en la web.
+                  </p>
+                </div>
                 {errors.available_stock && (
                   <p className="text-[#c9a74d] font-caption text-xs flex items-center gap-1">
                     <span className="material-symbols-outlined text-xs">warning</span>

@@ -21,7 +21,7 @@ export function EntradasClient({ initialTickets, eventInfo }: { initialTickets: 
     watch,
     formState: { errors, isSubmitting },
   } = useForm<CheckoutInput>({
-    resolver: zodResolver(CheckoutSchema),
+    resolver: zodResolver(CheckoutSchema) as any,
     defaultValues: {
       fullName: "",
       email: "",
@@ -32,6 +32,9 @@ export function EntradasClient({ initialTickets, eventInfo }: { initialTickets: 
         zipCode: "",
         country: "España",
       },
+      marketingConsent: false,
+      acceptTerms: false,
+      phone: "",
       items: [],
     },
   })
@@ -106,7 +109,7 @@ export function EntradasClient({ initialTickets, eventInfo }: { initialTickets: 
         <img
           alt="Fighter Hero"
           className="absolute inset-0 md:inset-y-0 md:left-auto md:right-0 w-full md:w-1/2 h-full object-cover object-top grayscale opacity-60"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ0ZBiiJDReXCpsQui9vsSIEgfvW1iErueKhgtar1UwQtmc_XaAwK7ntDAMEMN-Jqzz1XLLN6x6VZqIkYPhcUdIoOb3LpoUcWoUk4Y0mGvU0-gLhU6YS15hqLiNt8vPlIDBaW0CMpZ0R80GUUt2a0mM-MiVbi1lKn4tKHRUDYe_tekeELTwWOhWmZHYjVak5kt6ms-alfZ3tXdR2h5NO5F4-0EgZ_3_udAjsVZ0hlhm3GsXdjMFGmfSxxshoAdAX17CaQSl232GCc"
+          src={eventInfo.ticketsHeroImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuBZ0ZBiiJDReXCpsQui9vsSIEgfvW1iErueKhgtar1UwQtmc_XaAwK7ntDAMEMN-Jqzz1XLLN6x6VZqIkYPhcUdIoOb3LpoUcWoUk4Y0mGvU0-gLhU6YS15hqLiNt8vPlIDBaW0CMpZ0R80GUUt2a0mM-MiVbi1lKn4tKHRUDYe_tekeELTwWOhWmZHYjVak5kt6ms-alfZ3tXdR2h5NO5F4-0EgZ_3_udAjsVZ0hlhm3GsXdjMFGmfSxxshoAdAX17CaQSl232GCc"}
         />
         {/* Degradado para ocultar el corte de la imagen en desktop */}
         <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent md:bg-gradient-to-r md:from-surface md:via-surface md:via-[55%] md:to-transparent"></div>
@@ -332,6 +335,70 @@ export function EntradasClient({ initialTickets, eventInfo }: { initialTickets: 
                 </div>
               </div>
 
+              {/* Teléfono (Opcional) */}
+              <div className="flex flex-col gap-xs">
+                <label className="font-label-bold text-on-surface-variant uppercase">
+                  Teléfono <span className="text-outline text-xs normal-case">(Opcional)</span>
+                </label>
+                <input
+                  {...register("phone")}
+                  className="bg-surface border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-md uppercase font-body-md"
+                  placeholder="+34 600 000 000"
+                  type="tel"
+                />
+              </div>
+
+              {/* Checkbox de Términos */}
+              <div className="flex flex-col gap-sm mt-md p-md bg-surface border border-outline-variant">
+                <div className="flex items-start gap-sm">
+                  <div className="relative flex items-center h-5 w-5 mt-1 flex-shrink-0">
+                    <input
+                      type="checkbox"
+                      id="acceptTerms"
+                      {...register("acceptTerms")}
+                      className="peer absolute inset-0 opacity-0 cursor-pointer z-10"
+                    />
+                    <div className="h-5 w-5 border-2 border-outline-variant bg-surface-container peer-checked:bg-neon-yellow peer-checked:border-neon-yellow transition-all flex items-center justify-center">
+                      <span className="material-symbols-outlined text-surface text-[14px] opacity-0 peer-checked:opacity-100 font-bold leading-none">
+                        check
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <label htmlFor="acceptTerms" className="font-body-md text-on-surface text-sm cursor-pointer pt-0.5">
+                      He leído y acepto los <a href="/terminos-de-uso" target="_blank" className="text-neon-yellow underline underline-offset-2">Términos de Uso</a> y la <a href="/privacidad-de-datos" target="_blank" className="text-neon-yellow underline underline-offset-2">Política de Privacidad</a>.
+                    </label>
+                    {errors.acceptTerms && (
+                      <p className="text-[#c9a74d] font-caption text-xs flex items-center gap-1">
+                        <span className="material-symbols-outlined text-xs">warning</span>
+                        {errors.acceptTerms.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-sm pt-sm border-t border-outline-variant/30 mt-sm">
+                  <div className="relative flex items-center h-5 w-5 mt-1 flex-shrink-0">
+                    <input
+                      type="checkbox"
+                      id="marketingConsent"
+                      {...register("marketingConsent")}
+                      className="peer absolute inset-0 opacity-0 cursor-pointer z-10"
+                    />
+                    <div className="h-5 w-5 border-2 border-outline-variant bg-surface-container peer-checked:bg-neon-yellow peer-checked:border-neon-yellow transition-all flex items-center justify-center">
+                      <span className="material-symbols-outlined text-surface text-[14px] opacity-0 peer-checked:opacity-100 font-bold leading-none">
+                        check
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <label htmlFor="marketingConsent" className="font-body-md text-on-surface text-sm cursor-pointer pt-0.5">
+                      Deseo recibir información sobre futuros eventos y promociones de Strike & Beat. <span className="text-outline text-xs italic">(Opcional)</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
 
               {/* Resumen de precios */}
               <div className="pt-lg">
@@ -373,16 +440,11 @@ export function EntradasClient({ initialTickets, eventInfo }: { initialTickets: 
                     Cargando...
                   </>
                 ) : (
-                  <>
-                    Pagar Ahora
-                    <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
-                  </>
+                  "Pagar Ahora"
                 )}
               </button>
 
-              <p className="text-center text-caption font-caption text-on-surface-variant uppercase tracking-widest pt-sm">
-                Secure checkout powered by Stripe
-              </p>
+
             </div>
           </div>
         </form>

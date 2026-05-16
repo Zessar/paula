@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { logout } from "@/app/login/actions"
 
 /* ------------------------------------------------------------------ */
 /*  SIDEBAR NAVIGATION                                                 */
@@ -14,6 +15,7 @@ const NAV_ITEMS = [
   { href: "/admin/combates", label: "Combates", icon: "sports_mma" },
   { href: "/admin/artistas", label: "Artistas", icon: "mic_external_on" },
   { href: "/admin/patrocinadores", label: "Sponsors", icon: "handshake" },
+  { href: "/admin/faq", label: "FAQs", icon: "help" },
   { href: "/admin/entradas", label: "Entradas", icon: "confirmation_number" },
   { href: "/admin/ajustes", label: "Ajustes", icon: "settings" },
 ]
@@ -101,17 +103,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </ul>
         </nav>
 
-        {/* Footer / Version */}
-        <div className="p-md border-t-2 border-outline-variant">
-          <div className="flex items-center gap-sm">
-            <span className="w-2 h-2 bg-green-500 flex-shrink-0"></span>
-            <span className="font-caption text-caption text-outline uppercase tracking-wider">
-              Sistema Activo
-            </span>
+        {/* Footer / Logout */}
+        <div className="p-md border-t-2 border-outline-variant bg-surface-container-low/30">
+          <div className="flex items-center justify-between mb-md">
+            <div className="flex items-center gap-sm">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+              <span className="font-label-bold text-[10px] text-on-surface-variant uppercase tracking-[0.2em]">
+                Terminal Online
+              </span>
+            </div>
+            <span className="font-label-bold text-[10px] text-outline opacity-50">v0.1.0</span>
           </div>
-          <p className="font-caption text-caption text-outline mt-xs">
-            v0.1.0-dev
-          </p>
+          <button
+            onClick={async () => { await logout(); window.location.href = '/login'; }}
+            className="w-full flex items-center justify-center gap-md px-md py-md border-2 border-outline-variant text-on-surface-variant hover:border-error hover:text-white hover:bg-error transition-all duration-300 font-label-bold text-[11px] uppercase tracking-[0.25em] group"
+          >
+            <span className="material-symbols-outlined text-[18px] group-hover:rotate-180 transition-transform duration-500">logout</span>
+            Cerrar Sesión
+          </button>
         </div>
       </aside>
 
@@ -134,15 +143,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               {NAV_ITEMS.find((i) => isActive(i.href))?.label || "Admin"}
             </span>
           </div>
-          <div className="flex items-center gap-md">
-            <span className="font-caption text-caption text-outline uppercase hidden sm:block">
-              {new Date().toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" })}
-            </span>
-            <div className="w-8 h-8 bg-neon-yellow flex items-center justify-center">
-              <span className="material-symbols-outlined text-surface text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                person
+          <div className="flex items-center gap-lg">
+            <div className="flex flex-col items-end hidden xs:flex">
+              <span className="font-label-bold text-[10px] text-on-surface-variant uppercase tracking-widest">
+                {new Date().toLocaleDateString("es-ES", { day: "2-digit", month: "short" })}
+              </span>
+              <span className="font-label-bold text-[10px] text-outline uppercase tracking-widest opacity-50">
+                {new Date().getFullYear()}
               </span>
             </div>
+            
+            <div className="h-8 w-[2px] bg-outline-variant hidden xs:block"></div>
+
+            <button
+              onClick={async () => { await logout(); window.location.href = '/login'; }}
+              className="flex items-center gap-sm px-md py-sm border-2 border-outline-variant hover:border-error group transition-all duration-300 bg-surface-container"
+              title="Cerrar Sesión"
+            >
+              <div className="w-6 h-6 bg-neon-yellow flex items-center justify-center group-hover:bg-error transition-colors">
+                <span className="material-symbols-outlined text-surface text-[16px] font-bold">
+                  logout
+                </span>
+              </div>
+              <span className="font-label-bold text-[10px] text-on-surface-variant uppercase tracking-[0.2em] group-hover:text-error transition-colors hidden sm:block">
+                Salir
+              </span>
+            </button>
           </div>
         </header>
 

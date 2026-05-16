@@ -37,11 +37,13 @@ export function AdminArtistsClient({ initialArtists }: { initialArtists: Artist[
         profile_link: artist.profileLink || "",
         instagram_url: artist.instagramUrl || "",
         spotify_url: artist.spotifyUrl || "",
+        spotify_embed_url: artist.spotifyEmbedUrl || "",
         youtube_url: artist.youtubeUrl || "",
         description: artist.description || "",
         video_url: artist.videoUrl || "",
         hero_image: artist.heroImage || "",
         slug: artist.slug || "",
+        subtitle: artist.subtitle || "",
         sort_order: 0,
       });
     } else {
@@ -53,11 +55,13 @@ export function AdminArtistsClient({ initialArtists }: { initialArtists: Artist[
         profile_link: "",
         instagram_url: "",
         spotify_url: "",
+        spotify_embed_url: "",
         youtube_url: "",
         description: "",
         video_url: "",
         hero_image: "",
         slug: "",
+        subtitle: "",
         sort_order: artists.length,
       });
     }
@@ -197,6 +201,11 @@ export function AdminArtistsClient({ initialArtists }: { initialArtists: Artist[
                   {errors.genre && <span className="text-error text-xs">{errors.genre.message}</span>}
                 </div>
                 <div className="flex flex-col gap-xs">
+                  <label className="font-label-bold text-xs uppercase text-outline">Párrafo corto (Tarjeta)</label>
+                  <textarea {...register("subtitle")} rows={2} className="bg-surface-container border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md resize-none" placeholder="Frase corta que aparecerá en la tarjeta del listado..." />
+                  {errors.subtitle && <span className="text-error text-xs">{errors.subtitle.message}</span>}
+                </div>
+                <div className="flex flex-col gap-xs">
                   <ImageUpload 
                     label="Foto del Artista"
                     value={watch("image") || ""}
@@ -218,6 +227,14 @@ export function AdminArtistsClient({ initialArtists }: { initialArtists: Artist[
                 <div className="flex flex-col gap-xs">
                   <label className="font-label-bold text-xs uppercase text-outline">Descripcion / Biografia</label>
                   <textarea {...register("description")} rows={4} className="bg-surface-container border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md resize-y" placeholder="Biografia del artista, trayectoria, logros..." />
+                  <div className="bg-surface-container-low border border-outline-variant p-sm mt-xs">
+                    <p className="text-outline text-[10px] leading-relaxed">
+                      Puedes usar HTML para dar formato: <code className="text-neon-yellow">&lt;strong&gt;texto&lt;/strong&gt;</code> para <strong className="text-white">negrita</strong>, 
+                      <code className="text-neon-yellow">&lt;em&gt;texto&lt;/em&gt;</code> para <em className="text-white">cursiva</em>, 
+                      <code className="text-neon-yellow">&lt;span class=&quot;text-primary&quot;&gt;texto&lt;/span&gt;</code> para <span className="text-primary">color primario</span>, 
+                      <code className="text-neon-yellow">&lt;span class=&quot;text-neon-yellow&quot;&gt;texto&lt;/span&gt;</code> para <span className="text-neon-yellow">color amarillo</span>.
+                    </p>
+                  </div>
                 </div>
                 <div className="flex flex-col gap-xs">
                   <label className="font-label-bold text-xs uppercase text-outline">Video (URL de YouTube)</label>
@@ -233,6 +250,7 @@ export function AdminArtistsClient({ initialArtists }: { initialArtists: Artist[
                   />
                   <span className="text-outline text-[10px]">Imagen grande de fondo para la cabecera del perfil. Si no se sube, se usara la foto principal.</span>
                 </div>
+
               </div>
 
               {/* Seccion: Redes Sociales */}

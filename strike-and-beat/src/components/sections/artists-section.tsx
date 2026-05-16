@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { getArtists } from "@/lib/supabase/queries";
 
 export async function ArtistsSection() {
@@ -13,8 +14,6 @@ export async function ArtistsSection() {
         {artists.map((artist, index) => {
           const isEven = index % 2 === 0;
           const accentColor = isEven ? "text-primary" : "text-neon-yellow";
-          const borderColor = isEven ? "border-primary" : "border-neon-yellow";
-          const hoverBgColor = isEven ? "hover:bg-primary" : "hover:bg-neon-yellow";
           const hoverBorderColor = isEven ? "hover:border-primary" : "hover:border-neon-yellow";
 
           return (
@@ -22,31 +21,39 @@ export async function ArtistsSection() {
               <img alt={artist.name} className="w-full aspect-[3/4] object-cover grayscale" src={artist.image}/>
               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
               <div className="absolute bottom-0 p-md w-full">
-                <h4 className="font-headline-md text-headline-md text-white">{artist.name}</h4>
+                <h4 className="font-display-md font-bold text-[32px] md:text-[40px] text-white uppercase leading-none mb-xs">{artist.name}</h4>
                 <p className={`font-caption ${accentColor} mb-md uppercase tracking-widest`}>{artist.genre}</p>
-                <div className="flex gap-2 mb-sm">
+                <div className="flex gap-4 mb-md">
                   {artist.instagramUrl && (
                     <Link href={artist.instagramUrl} target="_blank" className="text-white hover:text-primary transition-colors">
-                      <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>photo_camera</span>
+                      <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>photo_camera</span>
                     </Link>
                   )}
                   {artist.spotifyUrl && (
                     <Link href={artist.spotifyUrl} target="_blank" className="text-white hover:text-primary transition-colors">
-                      <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>headphones</span>
+                      <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>headphones</span>
                     </Link>
                   )}
                   {artist.youtubeUrl && (
                     <Link href={artist.youtubeUrl} target="_blank" className="text-white hover:text-primary transition-colors">
-                      <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>play_circle</span>
+                      <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>play_circle</span>
                     </Link>
                   )}
                 </div>
-                <Link 
-                  href={artist.profileLink} 
-                  className={`block w-full bg-surface ${accentColor} border ${borderColor} py-xs font-label-bold ${hoverBgColor} hover:text-surface text-center transition-all`}
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  size="lg"
+                  className={`w-full font-headline-md text-xl !border-2 transition-all ${
+                    isEven 
+                      ? "!border-primary !text-primary hover:!bg-primary hover:!text-surface" 
+                      : "!border-neon-yellow !text-neon-yellow hover:!bg-neon-yellow hover:!text-surface"
+                  }`}
                 >
-                  VER PERFIL
-                </Link>
+                  <Link href={artist.profileLink}>
+                    VER PERFIL
+                  </Link>
+                </Button>
               </div>
             </div>
           );

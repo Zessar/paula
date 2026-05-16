@@ -41,6 +41,7 @@ export function AdminFightsClient({ initialFights }: { initialFights: Fighter[] 
         rounds: fight.rounds,
         rules: fight.rules,
         is_featured: fight.isFeatured,
+        badge_text: fight.badgeText || "",
         sort_order: 0,
         description_a: fight.descriptionA || "",
         description_b: fight.descriptionB || "",
@@ -60,6 +61,7 @@ export function AdminFightsClient({ initialFights }: { initialFights: Fighter[] 
         rounds: "3x3",
         rules: "Pro MMA",
         is_featured: false,
+        badge_text: "",
         sort_order: fights.length,
         description_a: "",
         description_b: "",
@@ -171,10 +173,10 @@ export function AdminFightsClient({ initialFights }: { initialFights: Fighter[] 
                     <span className="text-xs text-outline">{fight.rounds} - {fight.rules}</span>
                   </td>
                   <td className="p-md hidden lg:table-cell">
-                    {fight.isFeatured ? (
-                      <span className="bg-neon-yellow text-surface px-2 py-1 text-xs font-label-bold uppercase">Estelar</span>
+                    {fight.badgeText ? (
+                      <span className="bg-neon-yellow text-surface px-2 py-1 text-xs font-label-bold uppercase">{fight.badgeText}</span>
                     ) : (
-                      <span className="bg-surface-container-high text-on-surface-variant px-2 py-1 text-xs font-label-bold uppercase">Preliminar</span>
+                      <span className="bg-surface-container-high text-on-surface-variant px-2 py-1 text-xs font-label-bold uppercase">Sin etiqueta</span>
                     )}
                   </td>
                   <td className="p-md text-right">
@@ -280,9 +282,13 @@ export function AdminFightsClient({ initialFights }: { initialFights: Fighter[] 
                   <input {...register("rules")} className="bg-surface-container border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md" placeholder="Ej: Pro MMA" />
                   {errors.rules && <span className="text-error text-xs">{errors.rules.message}</span>}
                 </div>
-                <div className="flex items-center gap-sm mt-sm md:col-span-3 border-t border-outline-variant pt-md">
-                  <input type="checkbox" id="is_featured" {...register("is_featured")} className="w-5 h-5 accent-neon-yellow" />
-                  <label htmlFor="is_featured" className="font-label-bold uppercase text-white cursor-pointer">Es el combate estelar (Main Event)</label>
+                <div className="flex flex-col gap-xs mt-sm md:col-span-3 border-t border-outline-variant pt-md">
+                  <label className="font-label-bold text-xs uppercase text-outline">Etiqueta del Combate (Badge)</label>
+                  <input {...register("badge_text")} className="bg-surface-container border border-outline-variant focus:border-neon-yellow focus:outline-none text-white p-sm font-body-md" placeholder="Ej: MAIN EVENT, CO-MAIN EVENT, COMBATE ESTELAR..." />
+                  <div className="flex items-center gap-sm mt-xs">
+                    <input type="checkbox" id="is_featured" {...register("is_featured")} className="w-4 h-4 accent-neon-yellow" />
+                    <label htmlFor="is_featured" className="font-label-bold text-[10px] uppercase text-outline cursor-pointer italic">Marcar como destacado (uso interno)</label>
+                  </div>
                 </div>
               </div>
 

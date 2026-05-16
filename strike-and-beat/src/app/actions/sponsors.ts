@@ -1,7 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createServerSupabaseClient, assertAdmin } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { SponsorSchema, type SponsorInput } from "@/lib/validations/admin";
 
@@ -21,6 +21,7 @@ export async function getSponsors() {
 }
 
 export async function saveSponsor(data: SponsorInput) {
+  await assertAdmin();
   const supabase = (await createServerSupabaseClient()) as any;
   
   const result = SponsorSchema.safeParse(data);
@@ -62,6 +63,7 @@ export async function saveSponsor(data: SponsorInput) {
 }
 
 export async function deleteSponsor(id: string) {
+  await assertAdmin();
   const supabase = (await createServerSupabaseClient()) as any;
   const { error } = await supabase.from("sponsors").delete().eq("id", id);
 

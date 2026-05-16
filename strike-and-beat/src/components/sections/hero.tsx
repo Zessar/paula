@@ -19,8 +19,8 @@ export async function Hero() {
             <p className="font-headline-md text-headline-md uppercase">{eventData.locationName}</p>
           </div>
         </div>
-        <Link className="inline-block bg-[#facc15] text-[#0a0a0a] font-display-xl text-[48px] px-xl py-lg uppercase hover:bg-white transition-colors tracking-tighter" href="/entradas">
-          COMPRAR <br />ENTRADAS
+        <Link className="inline-block bg-neon-yellow text-surface font-display-xl text-[48px] px-xl py-lg uppercase hover:bg-white transition-colors tracking-tighter" href="/entradas">
+          COMPRA TUS <br />ENTRADAS
         </Link>
       </div>
     </section>

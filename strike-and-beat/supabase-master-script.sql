@@ -114,7 +114,8 @@ CREATE TABLE orders (
     customer_dni TEXT,
     stripe_session_id TEXT UNIQUE NOT NULL,
     total_amount NUMERIC NOT NULL,
-    status TEXT DEFAULT 'pending'
+    status TEXT DEFAULT 'pending',
+    marketing_consent BOOLEAN DEFAULT false
 );
 
 -- Tabla: order_items

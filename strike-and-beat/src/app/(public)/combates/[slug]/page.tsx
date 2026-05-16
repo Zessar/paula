@@ -39,7 +39,7 @@ export default async function FightProfilePage({
           {/* Etiqueta */}
           <div className="text-center mb-lg">
             <span className="bg-primary text-surface px-lg py-xs font-label-bold uppercase text-xs tracking-widest">
-              {fight.isFeatured ? "Main Event" : "Under Card"} — {fight.category}
+              {fight.badgeText || (fight.isFeatured ? "Main Event" : "Under Card")} — {fight.category}
             </span>
           </div>
 
@@ -133,9 +133,9 @@ export default async function FightProfilePage({
             <div className="bg-surface-container brutalist-border p-lg">
               <div className="flex items-center gap-sm mb-md">
                 <div className="w-2 h-8 bg-primary" />
-                <h3 className="font-headline-md text-headline-sm uppercase">{fight.nameA}</h3>
+                <h3 className="font-display-xl text-[32px] md:text-[42px] uppercase leading-none">{fight.nameA}</h3>
               </div>
-              <p className="font-body-lg text-body-md leading-relaxed text-on-surface-variant whitespace-pre-line">
+              <p className="font-body-lg text-xl leading-relaxed text-on-surface-variant whitespace-pre-line">
                 {fight.descriptionA}
               </p>
             </div>
@@ -146,9 +146,9 @@ export default async function FightProfilePage({
             <div className="bg-surface-container brutalist-border p-lg">
               <div className="flex items-center gap-sm mb-md">
                 <div className="w-2 h-8 bg-primary" />
-                <h3 className="font-headline-md text-headline-sm uppercase">{fight.nameB}</h3>
+                <h3 className="font-display-xl text-[32px] md:text-[42px] uppercase leading-none">{fight.nameB}</h3>
               </div>
-              <p className="font-body-lg text-body-md leading-relaxed text-on-surface-variant whitespace-pre-line">
+              <p className="font-body-lg text-xl leading-relaxed text-on-surface-variant whitespace-pre-line">
                 {fight.descriptionB}
               </p>
             </div>

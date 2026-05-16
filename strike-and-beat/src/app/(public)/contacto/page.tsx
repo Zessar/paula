@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import Link from "next/link"
 import { Mail, MapPin, Clock, Send, Phone } from "lucide-react"
 import { getEventInfo } from "@/lib/supabase/queries"
+import { CopyContactCard } from "@/components/ui/copy-contact-card"
 
 export const metadata: Metadata = {
   title: "Contacto | Strike & Beat",
@@ -16,16 +17,23 @@ export default async function ContactoPage() {
       {/* ============================================================ */}
       {/*  HERO SECTION                                                */}
       {/* ============================================================ */}
-      <section className="relative h-[40vh] min-h-[350px] w-full flex flex-col justify-center overflow-hidden border-b-4 border-neon-yellow pt-12">
+      <section className="relative h-[48vh] md:h-[70vh] min-h-[420px] md:min-h-[550px] w-full flex flex-col justify-center overflow-hidden border-b-4 border-neon-yellow pt-0 bg-surface">
+        {/* Background Image */}
+        {eventData.contactHeroImage && (
+          <img
+            alt="Contact Hero"
+            className="absolute inset-0 md:inset-y-0 md:left-auto md:right-0 w-full md:w-1/2 h-full object-cover object-top grayscale opacity-60"
+            src={eventData.contactHeroImage}
+          />
+        )}
         {/* Background Overlay */}
-        <div className="absolute inset-0 bg-surface"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/60 to-transparent md:bg-gradient-to-r md:from-surface md:via-surface md:via-[55%] md:to-transparent"></div>
         
         <div className="relative z-10 px-gutter w-full max-w-container-max mx-auto">
           <div className="bg-neon-yellow text-surface inline-block px-md py-xs font-headline-md text-[20px] md:text-[24px] uppercase mb-sm tracking-widest">
             Estamos Aquí
           </div>
-          <h1 className="font-display-xl text-[18vw] md:text-[10vw] lg:text-[100px] uppercase text-white leading-[0.9] tracking-[0.02em] flex flex-col items-start">
+          <h1 className="font-display-xl text-[24vw] md:text-[16vw] lg:text-[150px] uppercase text-white leading-[0.85] tracking-[0.02em] flex flex-col items-start overflow-hidden">
             {eventData.contactTitle ? (
               <>
                 {eventData.contactTitle.split(' ').map((word, i, arr) => (
@@ -51,7 +59,7 @@ export default async function ContactoPage() {
           {/* Informacion de contacto (4 cols) */}
           <div className="lg:col-span-5 space-y-lg">
             <div>
-              <h2 className="font-display-xl text-headline-lg text-white uppercase mb-md">
+              <h2 className="font-display-xl text-[44px] md:text-headline-lg text-white uppercase mb-md leading-[1] md:leading-[1.1]">
                 {eventData.contactSubtitle ? (
                   <>
                     {eventData.contactSubtitle.split(' ').slice(0, -2).join(' ')} <br /> 
@@ -61,53 +69,41 @@ export default async function ContactoPage() {
                   <>Información <br /> <span className="text-neon-yellow">De Enlace</span></>
                 )}
               </h2>
-              <p className="font-body-lg text-on-surface-variant leading-relaxed">
+              <p className="font-body-lg text-[20px] md:text-[22px] text-on-surface-variant leading-relaxed whitespace-pre-line">
                 {eventData.contactDescription || "¿Tienes dudas sobre las entradas, el evento o quieres colaborar? Escríbenos y nuestro equipo te responderá en menos de 48 horas."}
               </p>
             </div>
 
             <div className="grid gap-md">
-              <div className="group flex items-center gap-md p-lg border border-outline-variant bg-surface-variant/10 hover:border-neon-yellow transition-all">
-                <div className="w-14 h-14 bg-neon-yellow/10 flex items-center justify-center group-hover:bg-neon-yellow transition-colors">
-                  <Mail className="text-neon-yellow group-hover:text-surface transition-colors" />
-                </div>
-                <div>
-                  <p className="font-label-bold text-on-surface-variant text-xs uppercase tracking-widest">Email</p>
-                  <p className="font-headline-md text-white">{eventData.contactEmail || "contacto@strikeandbeat.com"}</p>
-                </div>
-              </div>
+              <CopyContactCard 
+                type="email" 
+                icon="mail" 
+                label="Email (Clic para copiar)" 
+                value={eventData.contactEmail || "contacto@strikeandbeat.com"} 
+              />
 
               {eventData.contactPhone && (
-                <div className="group flex items-center gap-md p-lg border border-outline-variant bg-surface-variant/10 hover:border-neon-yellow transition-all">
-                  <div className="w-14 h-14 bg-neon-yellow/10 flex items-center justify-center group-hover:bg-neon-yellow transition-colors">
-                    <Phone className="text-neon-yellow group-hover:text-surface transition-colors" />
-                  </div>
-                  <div>
-                    <p className="font-label-bold text-on-surface-variant text-xs uppercase tracking-widest">Teléfono</p>
-                    <p className="font-headline-md text-white">{eventData.contactPhone}</p>
-                  </div>
-                </div>
+                <CopyContactCard 
+                  type="phone" 
+                  icon="phone" 
+                  label="Teléfono (Clic para copiar)" 
+                  value={eventData.contactPhone} 
+                />
               )}
 
-              <div className="group flex items-center gap-md p-lg border border-outline-variant bg-surface-variant/10 hover:border-neon-yellow transition-all">
-                <div className="w-14 h-14 bg-neon-yellow/10 flex items-center justify-center group-hover:bg-neon-yellow transition-colors">
-                  <MapPin className="text-neon-yellow group-hover:text-surface transition-colors" />
-                </div>
-                <div>
-                  <p className="font-label-bold text-on-surface-variant text-xs uppercase tracking-widest">Localización</p>
-                  <p className="font-headline-md text-white uppercase">{eventData.locationName || "Arroyo Vallejo, Pabellón"}</p>
-                </div>
-              </div>
+              <CopyContactCard 
+                type="location" 
+                icon="map" 
+                label="Localización" 
+                value={eventData.locationName || "Arroyo Vallejo, Pabellón"} 
+              />
 
-              <div className="group flex items-center gap-md p-lg border border-outline-variant bg-surface-variant/10 hover:border-neon-yellow transition-all">
-                <div className="w-14 h-14 bg-neon-yellow/10 flex items-center justify-center group-hover:bg-neon-yellow transition-colors">
-                  <Clock className="text-neon-yellow group-hover:text-surface transition-colors" />
-                </div>
-                <div>
-                  <p className="font-label-bold text-on-surface-variant text-xs uppercase tracking-widest">Atención</p>
-                  <p className="font-headline-md text-white uppercase">{eventData.contactHours || "L-V: 10:00 - 18:00"}</p>
-                </div>
-              </div>
+              <CopyContactCard 
+                type="hours" 
+                icon="clock" 
+                label="Atención" 
+                value={eventData.contactHours || "L-V: 10:00 - 18:00"} 
+              />
             </div>
 
             {/* Bloque Asociacion */}
@@ -115,7 +111,7 @@ export default async function ContactoPage() {
               <h3 className="font-display-xl text-headline-md text-surface uppercase mb-xs">
                 {eventData.contactAssociationTitle || "Caminando Juntos"}
               </h3>
-              <p className="font-body-md text-surface/80 leading-snug">
+              <p className="font-body-md text-surface/80 leading-snug whitespace-pre-line">
                 {eventData.contactAssociationText || "Strike & Beat es un evento solidario organizado a beneficio de la Asociación Caminando. Cada entrada ayuda directamente a mejorar vidas."}
               </p>
             </div>
@@ -179,13 +175,13 @@ export default async function ContactoPage() {
         </div>
 
         {/* Footer Nav Links */}
-        <nav className="mt-xl pt-lg border-t border-outline-variant flex flex-wrap gap-md justify-between items-center font-label-bold text-xs uppercase tracking-widest text-on-surface-variant">
-          <div className="flex gap-lg">
-            <Link href="/terminos" className="hover:text-neon-yellow transition-colors">Términos</Link>
-            <Link href="/privacidad" className="hover:text-neon-yellow transition-colors">Privacidad</Link>
-          </div>
-          <Link href="/" className="text-neon-yellow hover:text-white transition-colors">
-            &larr; Volver a la lona
+        <nav className="mt-xl pt-lg border-t border-outline-variant flex justify-center items-center">
+          <Link 
+            href="/" 
+            className="group flex items-center gap-sm px-xl py-md border-2 border-neon-yellow text-neon-yellow hover:bg-neon-yellow hover:text-surface transition-all font-label-bold text-xs uppercase tracking-widest"
+          >
+            <span className="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            Volver a la lona
           </Link>
         </nav>
       </div>

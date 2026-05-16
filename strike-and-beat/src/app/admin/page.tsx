@@ -87,7 +87,7 @@ export default async function AdminDashboard() {
       {/* ============================================================ */}
       {/*  STATS GRID                                                  */}
       {/* ============================================================ */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-md">
         <StatCard
           label="Ingresos Totales"
           value={`${stats.totalRevenue.toLocaleString("es-ES", { minimumFractionDigits: 2 })}€`}
@@ -103,11 +103,6 @@ export default async function AdminDashboard() {
           label="Ticket Medio"
           value={`${stats.averageOrderValue.toFixed(2)}€`}
           icon="analytics"
-        />
-        <StatCard
-          label="Tasa Conversion"
-          value={`${stats.conversionRate}%`}
-          icon="percent"
         />
       </div>
 

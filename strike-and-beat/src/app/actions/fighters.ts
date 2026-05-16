@@ -1,10 +1,11 @@
 "use server";
 
-import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createServerSupabaseClient, assertAdmin } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { FighterSchema, type FighterInput } from "@/lib/validations/admin";
 
 export async function createFighter(data: FighterInput) {
+  await assertAdmin();
   const result = FighterSchema.safeParse(data);
   if (!result.success) {
     return { success: false, error: "Datos inválidos" };
@@ -25,6 +26,7 @@ export async function createFighter(data: FighterInput) {
     rounds: result.data.rounds,
     rules: result.data.rules,
     is_featured: result.data.is_featured,
+    badge_text: result.data.badge_text || null,
     sort_order: result.data.sort_order,
     description_a: result.data.description_a || null,
     description_b: result.data.description_b || null,
@@ -42,6 +44,7 @@ export async function createFighter(data: FighterInput) {
 }
 
 export async function updateFighter(data: FighterInput) {
+  await assertAdmin();
   const result = FighterSchema.safeParse(data);
   if (!result.success || !result.data.id) {
     return { success: false, error: "Datos inválidos" };
@@ -64,6 +67,7 @@ export async function updateFighter(data: FighterInput) {
       rounds: result.data.rounds,
       rules: result.data.rules,
       is_featured: result.data.is_featured,
+      badge_text: result.data.badge_text || null,
       sort_order: result.data.sort_order,
       description_a: result.data.description_a || null,
       description_b: result.data.description_b || null,
@@ -81,6 +85,7 @@ export async function updateFighter(data: FighterInput) {
 }
 
 export async function deleteFighter(id: string) {
+  await assertAdmin();
   const supabase: any = await createServerSupabaseClient();
 
   const { error } = await supabase.from("fights").delete().eq("id", id);

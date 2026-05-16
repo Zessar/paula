@@ -11,6 +11,9 @@ export const CheckoutSchema = z.object({
     zipCode: z.string().min(4, "Código postal requerido"),
     country: z.string()
   }),
+  phone: z.string().default(""),
+  marketingConsent: z.boolean().default(false),
+  acceptTerms: z.boolean().refine(val => val === true, "Debes aceptar los Términos de Uso y la Política de Privacidad"),
   items: z.array(z.object({
     ticketId: z.string(),
     priceId: z.string().optional(), // ID de precio de Stripe
